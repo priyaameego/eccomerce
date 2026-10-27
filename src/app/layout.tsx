@@ -7,6 +7,7 @@ import CartDrawer from "@/components/ui/CartDrawer";
 import QuickViewModal from "@/components/ui/QuickViewModal";
 import SearchModal from "@/components/ui/SearchModal";
 import CustomCursor from "@/components/ui/CustomCursor";
+import ThemeProvider from "@/components/ui/ThemeProvider";
 
 const sansFont = Plus_Jakarta_Sans({
   variable: "--font-sans",
@@ -66,22 +67,24 @@ export default function RootLayout({
       className={`${sansFont.variable} ${serifFont.variable} ${monoFont.variable} dark antialiased scroll-smooth`}
     >
       <body className="min-h-screen bg-[#090a0f] text-white flex flex-col font-sans selection:bg-[#d4af37] selection:text-black">
-        {/* Luxury Custom Magnetic Cursor */}
-        <CustomCursor />
+        <ThemeProvider>
+          {/* Luxury Custom Magnetic Cursor */}
+          <CustomCursor />
 
-        {/* Global Luxury Header */}
-        <Navbar />
+          {/* Global Luxury Header */}
+          <Navbar />
 
-        {/* Dynamic Page Children */}
-        <div className="flex-1">{children}</div>
+          {/* Dynamic Page Children */}
+          <div className="flex-1">{children}</div>
 
-        {/* Global Luxury Footer */}
-        <Footer />
+          {/* Global Luxury Footer */}
+          <Footer />
 
-        {/* Global Modals & Drawers */}
-        <CartDrawer />
-        <QuickViewModal />
-        <SearchModal />
+          {/* Global Modals & Drawers */}
+          <CartDrawer />
+          <QuickViewModal />
+          <SearchModal />
+        </ThemeProvider>
       </body>
     </html>
   );

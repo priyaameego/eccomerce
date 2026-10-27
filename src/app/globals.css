@@ -2,28 +2,9 @@
 
 @layer base {
   :root {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 5.5%;
-    --card-foreground: 0 0% 98%;
-    --primary: 43 65% 52%; /* Champagne Gold */
-    --primary-foreground: 240 10% 3.9%;
-    --muted: 240 5% 18%;
-    --muted-foreground: 240 5% 65%;
-    --border: 240 6% 15%;
-    --accent: 43 65% 52%;
-  }
-
-  .light-theme {
-    --background: 40 20% 98%;
-    --foreground: 240 10% 10%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 10%;
-    --primary: 43 80% 40%;
-    --primary-foreground: 0 0% 100%;
-    --muted: 40 10% 92%;
-    --muted-foreground: 240 5% 40%;
-    --border: 40 10% 88%;
+    --background: #090a0f;
+    --foreground: #ffffff;
+    --primary: #d4af37;
   }
 }
 
@@ -49,17 +30,10 @@
 
 /* Glassmorphism Classes */
 .glass-panel {
-  background: rgba(18, 19, 26, 0.65);
+  background: rgba(18, 19, 26, 0.7);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.glass-panel-light {
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .glass-card {
@@ -85,23 +59,6 @@
   background: linear-gradient(135deg, #ffffff 0%, #d1d5db 50%, #9ca3af 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-.gold-border-glow {
-  position: relative;
-}
-
-.gold-border-glow::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.6), transparent 60%, rgba(212, 175, 55, 0.3));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
 }
 
 /* Perspective 3D Tilt Wrapper */
@@ -132,23 +89,7 @@
   filter: blur(40px);
 }
 
-/* Shimmer Keyframes */
-@keyframes shimmerWave {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-.animate-shimmer {
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.08) 50%, rgba(255, 255, 255, 0) 100%);
-  background-size: 200% 100%;
-  animation: shimmerWave 2.8s infinite;
-}
-
-/* Pulse Glow Keyframes */
+/* Subtle Pulse */
 @keyframes subtlePulse {
   0%, 100% {
     opacity: 0.4;
@@ -162,4 +103,134 @@
 
 .animate-subtle-pulse {
   animation: subtlePulse 6s ease-in-out infinite;
+}
+
+/* ========================================= */
+/* LUXURY LIGHT MODE THEME OVERRIDES         */
+/* ========================================= */
+
+html.light,
+html.light body {
+  background-color: #f7f6f2 !important;
+  color: #17171d !important;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+html.light ::-webkit-scrollbar-track {
+  background: #ecebe6;
+}
+
+html.light .glass-panel {
+  background: rgba(255, 255, 255, 0.88) !important;
+  border-color: rgba(0, 0, 0, 0.09) !important;
+  color: #17171d !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light .glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 246, 240, 0.8) 100%) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: #17171d !important;
+  box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.07) !important;
+}
+
+html.light .glass-card:hover {
+  border-color: rgba(212, 175, 55, 0.7) !important;
+  box-shadow: 0 20px 40px -10px rgba(212, 175, 55, 0.22) !important;
+}
+
+html.light header > div:first-child {
+  background-color: #ecebe6 !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: #4b4b57 !important;
+}
+
+html.light header > div:first-child span.text-neutral-300 {
+  color: #17171d !important;
+}
+
+html.light header nav {
+  background: rgba(255, 255, 255, 0.88) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+html.light nav span.font-serif {
+  color: #121318 !important;
+}
+
+html.light nav a,
+html.light nav button {
+  color: #2e2e38 !important;
+}
+
+html.light nav a:hover,
+html.light nav button:hover {
+  color: #aa820a !important;
+}
+
+html.light .text-white {
+  color: #15151c !important;
+}
+
+html.light .text-neutral-300 {
+  color: #3e3e4a !important;
+}
+
+html.light .text-neutral-400 {
+  color: #5c5c6b !important;
+}
+
+html.light .text-neutral-500 {
+  color: #727282 !important;
+}
+
+html.light .bg-white\/5,
+html.light .bg-white\/10 {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+html.light .border-white\/5,
+html.light .border-white\/10,
+html.light .border-white\/20 {
+  border-color: rgba(0, 0, 0, 0.09) !important;
+}
+
+html.light section {
+  background-color: transparent !important;
+}
+
+html.light footer {
+  background-color: #ecebe6 !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: #2b2b35 !important;
+}
+
+html.light footer a {
+  color: #555563 !important;
+}
+
+html.light footer a:hover {
+  color: #17171d !important;
+}
+
+html.light footer .text-white {
+  color: #17171d !important;
+}
+
+html.light select,
+html.light option {
+  background-color: #ffffff !important;
+  color: #17171d !important;
+}
+
+html.light input,
+html.light textarea {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+  color: #17171d !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #8c8c9a !important;
 }

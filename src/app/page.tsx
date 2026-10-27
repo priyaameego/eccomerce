@@ -1,5 +1,6 @@
 import React from "react";
 import HeroSection from "@/components/home/HeroSection";
+import HomeAutoBanner from "@/components/home/HomeAutoBanner";
 import FlashSaleBanner from "@/components/home/FlashSaleBanner";
 import CategoryShowcase from "@/components/home/CategoryShowcase";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
@@ -20,6 +21,9 @@ export default function HomePage() {
     <main className="relative min-h-screen bg-[#090a0f] text-white selection:bg-[#d4af37] selection:text-black">
       {/* Hero with Interactive 3D WebGL Three.js Canvas */}
       <HeroSection />
+
+      {/* Auto-Changing Grand Atelier Showcase Banner */}
+      <HomeAutoBanner />
 
       {/* Private Vernissage Window & Live Millisecond Countdown */}
       <FlashSaleBanner />

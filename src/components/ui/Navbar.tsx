@@ -137,10 +137,20 @@ export default function Navbar() {
                 toggleTheme();
                 sound.playSwitch();
               }}
-              className="text-neutral-400 hover:text-white transition-colors"
-              title="Toggle Theme"
+              className="flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-white/10 hover:border-[#d4af37]/50 text-neutral-300 hover:text-[#d4af37] transition-all text-[10px] font-mono"
+              title={isDarkMode ? "Switch to Luxury Light Mode" : "Switch to Obsidian Dark Mode"}
             >
-              {isDarkMode ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
+              {isDarkMode ? (
+                <>
+                  <Sun className="w-3.5 h-3.5 text-amber-300" />
+                  <span className="hidden sm:inline">LIGHT</span>
+                </>
+              ) : (
+                <>
+                  <Moon className="w-3.5 h-3.5 text-[#d4af37]" />
+                  <span className="hidden sm:inline">DARK</span>
+                </>
+              )}
             </button>
           </div>
 
