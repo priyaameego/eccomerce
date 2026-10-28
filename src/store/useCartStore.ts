@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Product } from "@/data/products";
+import { Product, PRODUCTS } from "@/data/products";
 
 export interface CartItem {
   product: Product;
@@ -16,9 +16,10 @@ export interface Coupon {
 }
 
 export const AVAILABLE_COUPONS: Coupon[] = [
-  { code: "AURELIA10", discountPercent: 10, description: "Atelier Welcome - 10% Off Your Curated Order" },
-  { code: "VIP20", discountPercent: 20, description: "Obsidian Private Client - 20% Off Orders Over $3000" },
-  { code: "CONCIERGE", discountPercent: 15, description: "Private Concierge Courtesy - 15% Off" },
+  { code: "VELORA100", discountPercent: 15, description: "Velora Welcome - Extra 15% Off (Up to ₹100)" },
+  { code: "MEESHO100", discountPercent: 15, description: "Welcome Coupon - Extra 15% Off (Up to ₹100)" },
+  { code: "FESTIVE20", discountPercent: 20, description: "Festive Sale - Flat 20% Off" },
+  { code: "FREESHIP", discountPercent: 10, description: "Special Courtesy - Extra 10% Off" },
 ];
 
 interface CartState {
@@ -26,8 +27,8 @@ interface CartState {
   savedForLater: CartItem[];
   isOpen: boolean;
   appliedCoupon: Coupon | null;
-  shippingOption: "complimentary" | "express" | "courier";
-  
+  shippingOption: "standard" | "express";
+
   // Actions
   openCart: () => void;
   closeCart: () => void;
@@ -40,9 +41,9 @@ interface CartState {
   removeSavedItem: (productId: string) => void;
   applyCoupon: (code: string) => { success: boolean; message: string };
   removeCoupon: () => void;
-  setShippingOption: (opt: "complimentary" | "express" | "courier") => void;
+  setShippingOption: (opt: "standard" | "express") => void;
   clearCart: () => void;
-  
+
   // Calculations
   getSubtotal: () => number;
   getDiscountAmount: () => number;
@@ -54,68 +55,48 @@ interface CartState {
 
 export const useCartStore = create<CartState>((set, get) => ({
   items: [
-    // Pre-seed with one luxury product to give instant rich preview
     {
-      product: {
-        id: "prod-sound-01",
-        slug: "aether-spatial-anc-headphones",
-        title: "AETHER Spatial Pro Headphones",
-        subtitle: "Planar Magnetic Drivers with Real-Time Acoustic Raytracing",
-        category: "Acoustics",
-        subcategory: "Headphones",
-        brand: "AETHER Sound",
-        price: 890,
-        originalPrice: 1050,
-        rating: 4.96,
-        reviewsCount: 128,
-        inStock: true,
-        stockCount: 14,
-        images: [
-          "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1200&q=85",
-        ],
-        turntableImages: [],
-        colors: [
-          { name: "Space Graphite", hex: "#1C1C1E" },
-        ],
-        description: "Spatial audio engineered with custom 50mm beryllium-coated planar magnetic drivers.",
-        craftsmanship: "Memory foam ear cushions clad in organic lambskin leather.",
-        specs: {},
-        features: [],
-        reviews: [],
-      },
+      product: PRODUCTS[0],
       quantity: 1,
-      selectedColor: "Space Graphite",
+      selectedColor: "Royal Magenta",
+      selectedSize: "Free Size",
       addedAt: Date.now(),
     },
   ],
   savedForLater: [],
   isOpen: false,
   appliedCoupon: null,
-  shippingOption: "complimentary",
+  shippingOption: "standard",
 
   openCart: () => set({ isOpen: true }),
   closeCart: () => set({ isOpen: false }),
   toggleCart: () => set((state) => ({ isOpen: !state.isOpen })),
 
   addItem: (product, quantity = 1, selectedColor, selectedSize) => {
-    const color = selectedColor || product.colors?.[0]?.name;
-    const size = selectedSize || product.sizes?.[0];
-
     set((state) => {
-      const existingIdx = state.items.findIndex(
-        (i) => i.product.id === product.id && i.selectedColor === color && i.selectedSize === size
+      const existingIndex = state.items.findIndex(
+        (i) =>
+          i.product.id === product.id &&
+          i.selectedColor === selectedColor &&
+          i.selectedSize === selectedSize
       );
 
-      if (existingIdx > -1) {
-        const next = [...state.items];
-        next[existingIdx].quantity += quantity;
-        return { items: next, isOpen: true };
+      if (existingIndex > -1) {
+        const newItems = [...state.items];
+        newItems[existingIndex].quantity += quantity;
+        return { items: newItems, isOpen: true };
       }
 
       return {
         items: [
           ...state.items,
-          { product, quantity, selectedColor: color, selectedSize: size, addedAt: Date.now() },
+          {
+            product,
+            quantity,
+            selectedColor: selectedColor || product.colors?.[0]?.name,
+            selectedSize: selectedSize || product.sizes?.[0],
+            addedAt: Date.now(),
+          },
         ],
         isOpen: true,
       };
@@ -125,7 +106,12 @@ export const useCartStore = create<CartState>((set, get) => ({
   removeItem: (productId, selectedColor, selectedSize) => {
     set((state) => ({
       items: state.items.filter(
-        (i) => !(i.product.id === productId && i.selectedColor === selectedColor && i.selectedSize === selectedSize)
+        (i) =>
+          !(
+            i.product.id === productId &&
+            i.selectedColor === selectedColor &&
+            i.selectedSize === selectedSize
+          )
       ),
     }));
   },
@@ -137,7 +123,11 @@ export const useCartStore = create<CartState>((set, get) => ({
     }
     set((state) => ({
       items: state.items.map((i) => {
-        if (i.product.id === productId && i.selectedColor === selectedColor && i.selectedSize === selectedSize) {
+        if (
+          i.product.id === productId &&
+          i.selectedColor === selectedColor &&
+          i.selectedSize === selectedSize
+        ) {
           return { ...i, quantity };
         }
         return i;
@@ -147,13 +137,21 @@ export const useCartStore = create<CartState>((set, get) => ({
 
   saveForLater: (productId, selectedColor, selectedSize) => {
     const item = get().items.find(
-      (i) => i.product.id === productId && i.selectedColor === selectedColor && i.selectedSize === selectedSize
+      (i) =>
+        i.product.id === productId &&
+        i.selectedColor === selectedColor &&
+        i.selectedSize === selectedSize
     );
     if (!item) return;
 
     set((state) => ({
       items: state.items.filter(
-        (i) => !(i.product.id === productId && i.selectedColor === selectedColor && i.selectedSize === selectedSize)
+        (i) =>
+          !(
+            i.product.id === productId &&
+            i.selectedColor === selectedColor &&
+            i.selectedSize === selectedSize
+          )
       ),
       savedForLater: [...state.savedForLater, item],
     }));
@@ -161,13 +159,21 @@ export const useCartStore = create<CartState>((set, get) => ({
 
   moveToCartFromSaved: (productId, selectedColor, selectedSize) => {
     const item = get().savedForLater.find(
-      (i) => i.product.id === productId && i.selectedColor === selectedColor && i.selectedSize === selectedSize
+      (i) =>
+        i.product.id === productId &&
+        i.selectedColor === selectedColor &&
+        i.selectedSize === selectedSize
     );
     if (!item) return;
 
     set((state) => ({
       savedForLater: state.savedForLater.filter(
-        (i) => !(i.product.id === productId && i.selectedColor === selectedColor && i.selectedSize === selectedSize)
+        (i) =>
+          !(
+            i.product.id === productId &&
+            i.selectedColor === selectedColor &&
+            i.selectedSize === selectedSize
+          )
       ),
       items: [...state.items, item],
     }));
@@ -184,51 +190,44 @@ export const useCartStore = create<CartState>((set, get) => ({
     const found = AVAILABLE_COUPONS.find((c) => c.code === clean);
     if (found) {
       set({ appliedCoupon: found });
-      return { success: true, message: `Privilege unlocked: ${found.discountPercent}% courtesy applied.` };
+      return { success: true, message: `Coupon ${found.code} applied! Saved ${found.discountPercent}%` };
     }
-    return { success: false, message: "Invalid access token or expired coupon." };
+    return { success: false, message: "Invalid coupon. Try MEESHO100 or FESTIVE20" };
   },
 
   removeCoupon: () => set({ appliedCoupon: null }),
 
-  setShippingOption: (shippingOption) => set({ shippingOption }),
+  setShippingOption: (opt) => set({ shippingOption: opt }),
 
-  clearCart: () => set({ items: [], appliedCoupon: null }),
+  clearCart: () => set({ items: [] }),
 
   getSubtotal: () => {
-    return get().items.reduce((acc, curr) => acc + curr.product.price * curr.quantity, 0);
+    return get().items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
   },
 
   getDiscountAmount: () => {
     const subtotal = get().getSubtotal();
     const coupon = get().appliedCoupon;
     if (!coupon) return 0;
-    return (subtotal * coupon.discountPercent) / 100;
+    return Math.round((subtotal * coupon.discountPercent) / 100);
   },
 
   getShippingCost: () => {
-    const subtotal = get().getSubtotal();
-    // Complimentary above $1500 or default option
-    const opt = get().shippingOption;
-    if (opt === "express") return 45;
-    if (opt === "courier") return 120;
-    return subtotal > 1500 ? 0 : 25;
+    // Meesho features 100% Free Delivery!
+    return 0;
   },
 
   getTaxAmount: () => {
-    const subtotal = get().getSubtotal() - get().getDiscountAmount();
-    return Math.max(0, subtotal * 0.08); // 8% luxury sales tax
+    return 0;
   },
 
   getTotal: () => {
     const subtotal = get().getSubtotal();
     const discount = get().getDiscountAmount();
-    const shipping = get().getShippingCost();
-    const tax = get().getTaxAmount();
-    return Math.max(0, subtotal - discount + shipping + tax);
+    return Math.max(0, subtotal - discount);
   },
 
   getTotalItemsCount: () => {
-    return get().items.reduce((acc, curr) => acc + curr.quantity, 0);
+    return get().items.reduce((count, item) => count + item.quantity, 0);
   },
 }));

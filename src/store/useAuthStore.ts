@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 export interface UserAddress {
   id: string;
@@ -15,16 +16,25 @@ export interface UserAddress {
 
 export interface UserOrder {
   id: string;
-  orderNumber: string;
+  orderNumber?: string;
   date: string;
   total: number;
-  status: "Order Placed" | "In Production" | "White-Glove Dispatched" | "Delivered";
-  trackingCode: string;
+  subtotal?: number;
+  discount?: number;
+  shipping?: number;
+  tax?: number;
+  status: "Order Placed" | "Processing" | "Shipped" | "Delivered";
+  trackingCode?: string;
+  paymentMethod?: string;
+  shippingAddress?: any;
   items: {
-    title: string;
-    image: string;
+    product?: any;
+    title?: string;
+    image?: string;
     quantity: number;
-    price: number;
+    price?: number;
+    selectedColor?: string;
+    selectedSize?: string;
   }[];
 }
 
@@ -32,10 +42,9 @@ export interface UserProfile {
   id: string;
   email: string;
   name: string;
-  role: "client" | "vip" | "admin" | "vendor";
-  tier: "Obsidian VIP" | "Gold Atelier" | "Silver Member";
-  walletBalance: number; // e.g. $1,500 credits
-  loyaltyPoints: number;
+  role: "customer" | "supplier" | "admin";
+  walletBalance: number; // Velora Credits (₹)
+  coins: number; // Velora Smart Coins
   phone: string;
   avatar: string;
   addresses: UserAddress[];
@@ -46,7 +55,8 @@ interface AuthState {
   user: UserProfile | null;
   token: string | null;
   isAuthenticated: boolean;
-  login: (email: string, pass: string) => { success: boolean; message: string };
+  login: (phoneOrEmail: string, otp?: string) => { success: boolean; message: string };
+  loginWithOtp: (name: string, phone: string, email?: string) => { success: boolean; message: string };
   logout: () => void;
   updateProfile: (updates: Partial<UserProfile>) => void;
   addAddress: (address: Omit<UserAddress, "id">) => void;
@@ -55,126 +65,148 @@ interface AuthState {
   addOrder: (order: UserOrder) => void;
 }
 
-const DEFAULT_VIP_USER: UserProfile = {
-  id: "usr_aur_99182",
-  email: "julian.v@aurelia-atelier.luxury",
-  name: "Lord Julian Vance",
-  role: "vip",
-  tier: "Obsidian VIP",
-  walletBalance: 2450.00,
-  loyaltyPoints: 18400,
-  phone: "+1 (555) 892-0192",
-  avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
-  addresses: [
+export const useAuthStore = create<AuthState>()(
+  persist(
+    (set, get) => ({
+      user: null, // Starts as null so user can log in with their own name & phone
+      token: null,
+      isAuthenticated: false,
+
+      // Login with custom Name & Phone via OTP verification
+      loginWithOtp: (name: string, phone: string, email?: string) => {
+        const cleanName = name.trim() || "Velora Customer";
+        const digitsOnly = phone.replace(/\D/g, "");
+        const formattedPhone = phone.startsWith("+91")
+          ? phone
+          : `+91 ${digitsOnly.length === 10 ? digitsOnly : phone.trim()}`;
+        
+        const cleanEmail =
+          email?.trim() ||
+          `${cleanName.toLowerCase().replace(/[^a-z0-9]/g, "") || "user"}@gmail.com`;
+
+        const newUser: UserProfile = {
+          id: `usr_vel_${Date.now()}`,
+          name: cleanName,
+          email: cleanEmail,
+          role: "customer",
+          walletBalance: 250,
+          coins: 140,
+          phone: formattedPhone,
+          avatar: "",
+          addresses: [
+            {
+              id: `addr-${Date.now()}`,
+              isDefault: true,
+              fullName: cleanName,
+              street: "Flat 402, Sunshine Apartments, Sector 14",
+              apartment: "Near Metro Station",
+              city: "New Delhi",
+              state: "Delhi",
+              postalCode: "110001",
+              country: "India",
+              phone: formattedPhone,
+            },
+          ],
+          orders: [
+            {
+              id: `VEL-${Math.floor(100000 + Math.random() * 900000)}`,
+              orderNumber: `VEL-${Math.floor(100000 + Math.random() * 900000)}`,
+              date: "26 Oct 2026",
+              total: 389,
+              status: "Shipped",
+              trackingCode: "EXPRESS-DELHIVERY-981240",
+              paymentMethod: "Cash on Delivery",
+              items: [
+                {
+                  title: "Kashvi Pretty Banarasi Silk Jacquard Saree With Blouse Piece",
+                  image:
+                    "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=400&q=80",
+                  quantity: 1,
+                  price: 389,
+                  selectedColor: "Royal Magenta",
+                  selectedSize: "Free Size",
+                },
+              ],
+            },
+          ],
+        };
+
+        set({
+          user: newUser,
+          token: `vel_token_${Date.now()}`,
+          isAuthenticated: true,
+        });
+
+        return { success: true, message: `Welcome to Velora, ${cleanName}!` };
+      },
+
+      login: (phoneOrEmail) => {
+        if (!phoneOrEmail) {
+          return { success: false, message: "Please enter your mobile number or email." };
+        }
+        return get().loginWithOtp("Velora Customer", phoneOrEmail);
+      },
+
+      logout: () => {
+        set({ user: null, token: null, isAuthenticated: false });
+      },
+
+      updateProfile: (updates) => {
+        const current = get().user;
+        if (current) {
+          set({ user: { ...current, ...updates } });
+        }
+      },
+
+      addAddress: (addr) => {
+        const current = get().user;
+        if (!current) return;
+        const newAddr: UserAddress = {
+          ...addr,
+          id: `addr-${Date.now()}`,
+        };
+        const updated = [newAddr, ...current.addresses];
+        set({ user: { ...current, addresses: updated } });
+      },
+
+      deleteAddress: (id) => {
+        const current = get().user;
+        if (!current) return;
+        set({
+          user: {
+            ...current,
+            addresses: current.addresses.filter((a) => a.id !== id),
+          },
+        });
+      },
+
+      setDefaultAddress: (id) => {
+        const current = get().user;
+        if (!current) return;
+        set({
+          user: {
+            ...current,
+            addresses: current.addresses.map((a) => ({
+              ...a,
+              isDefault: a.id === id,
+            })),
+          },
+        });
+      },
+
+      addOrder: (order) => {
+        const current = get().user;
+        if (!current) return;
+        set({
+          user: {
+            ...current,
+            orders: [order, ...current.orders],
+          },
+        });
+      },
+    }),
     {
-      id: "addr-1",
-      isDefault: true,
-      fullName: "Lord Julian Vance",
-      street: "432 Park Avenue, Penthouse 88",
-      apartment: "Tower Suite A",
-      city: "New York",
-      state: "NY",
-      postalCode: "10022",
-      country: "United States",
-      phone: "+1 (555) 892-0192",
-    },
-  ],
-  orders: [
-    {
-      id: "ord-88392",
-      orderNumber: "AUR-2026-9041",
-      date: "Oct 24, 2026",
-      total: 4850.00,
-      status: "In Production",
-      trackingCode: "SECURE-FEDEX-PRIORITY-904128",
-      items: [
-        {
-          title: "AURELIA Celestial Tourbillon",
-          image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=400&q=80",
-          quantity: 1,
-          price: 4850.00,
-        },
-      ],
-    },
-  ],
-};
-
-export const useAuthStore = create<AuthState>((set, get) => ({
-  user: DEFAULT_VIP_USER,
-  token: "jwt_token_sample_aurelia_vip_secret_signature",
-  isAuthenticated: true,
-
-  login: (email, pass) => {
-    if (!email || !pass) {
-      return { success: false, message: "Please provide valid credentials." };
+      name: "velora_user_auth_v2",
     }
-    set({
-      user: DEFAULT_VIP_USER,
-      token: "jwt_mock_token_success",
-      isAuthenticated: true,
-    });
-    return { success: true, message: `Welcome back, ${DEFAULT_VIP_USER.name}.` };
-  },
-
-  logout: () => {
-    set({ user: null, token: null, isAuthenticated: false });
-  },
-
-  updateProfile: (updates) => {
-    const current = get().user;
-    if (current) {
-      set({ user: { ...current, ...updates } });
-    }
-  },
-
-  addAddress: (addr) => {
-    const current = get().user;
-    if (!current) return;
-    const newAddr: UserAddress = {
-      ...addr,
-      id: `addr-${Date.now()}`,
-    };
-    set({
-      user: {
-        ...current,
-        addresses: [...current.addresses, newAddr],
-      },
-    });
-  },
-
-  deleteAddress: (id) => {
-    const current = get().user;
-    if (!current) return;
-    set({
-      user: {
-        ...current,
-        addresses: current.addresses.filter((a) => a.id !== id),
-      },
-    });
-  },
-
-  setDefaultAddress: (id) => {
-    const current = get().user;
-    if (!current) return;
-    set({
-      user: {
-        ...current,
-        addresses: current.addresses.map((a) => ({
-          ...a,
-          isDefault: a.id === id,
-        })),
-      },
-    });
-  },
-
-  addOrder: (order) => {
-    const current = get().user;
-    if (!current) return;
-    set({
-      user: {
-        ...current,
-        orders: [order, ...current.orders],
-      },
-    });
-  },
-}));
+  )
+);

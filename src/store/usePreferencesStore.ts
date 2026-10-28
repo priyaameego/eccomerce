@@ -6,7 +6,7 @@ interface PreferencesState {
   currency: Currency;
   isDarkMode: boolean;
   soundEnabled: boolean;
-  language: "EN" | "FR" | "JA" | "AR";
+  language: "EN" | "HI" | "BN" | "TE";
   quickViewProduct: Product | null;
   isSearchOpen: boolean;
   isMegaMenuOpen: boolean;
@@ -15,7 +15,7 @@ interface PreferencesState {
   setCurrency: (currency: Currency) => void;
   toggleTheme: () => void;
   setSoundEnabled: (val: boolean) => void;
-  setLanguage: (lang: "EN" | "FR" | "JA" | "AR") => void;
+  setLanguage: (lang: "EN" | "HI" | "BN" | "TE") => void;
   openQuickView: (product: Product) => void;
   closeQuickView: () => void;
   setSearchOpen: (val: boolean) => void;
@@ -24,14 +24,14 @@ interface PreferencesState {
 }
 
 export const usePreferencesStore = create<PreferencesState>((set) => ({
-  currency: "USD",
-  isDarkMode: true,
-  soundEnabled: true,
+  currency: "INR",
+  isDarkMode: false,
+  soundEnabled: false,
   language: "EN",
   quickViewProduct: null,
   isSearchOpen: false,
   isMegaMenuOpen: false,
-  activeMegaCategory: "Horology",
+  activeMegaCategory: "Women Ethnic",
 
   setCurrency: (currency) => set({ currency }),
   toggleTheme: () => set((state) => ({ isDarkMode: !state.isDarkMode })),

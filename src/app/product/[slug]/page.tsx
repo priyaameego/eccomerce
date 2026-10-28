@@ -18,8 +18,8 @@ export async function generateMetadata({
   if (!product) return {};
 
   return {
-    title: `${product.title} • AURELIA Atelier`,
-    description: product.subtitle,
+    title: `${product.title} - Buy Online at Lowest Price | Velora`,
+    description: product.description,
     openGraph: {
       title: product.title,
       description: product.description,

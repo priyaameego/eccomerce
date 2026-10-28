@@ -1,182 +1,168 @@
 "use client";
 
 import React, { useState } from "react";
-import { Sparkles, Calendar, Clock, MapPin, Mail, Phone, Check, ShieldCheck } from "lucide-react";
-import { sound } from "@/lib/sound";
+import { Headphones, Phone, Mail, MapPin, Check, Send } from "lucide-react";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
     phone: "",
-    salon: "Geneva (Rue du Rhône)",
-    preferredDate: "",
-    creationInterest: "Haute Horlogerie Tourbillons",
-    notes: "",
+    email: "",
+    issueType: "Order & Delivery",
+    message: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email) return;
+    if (!formData.name || !formData.phone) return;
     setSubmitted(true);
-    sound.playSuccess();
   };
 
   return (
-    <div className="pt-28 pb-24 px-6 max-w-7xl mx-auto min-h-screen">
-      <div className="text-center max-w-2xl mx-auto mb-16">
-        <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#d4af37] flex items-center justify-center gap-2 mb-2">
-          <Sparkles className="w-3.5 h-3.5" />
-          Private Client Services
+    <div className="pt-6 pb-20 px-4 sm:px-6 max-w-5xl mx-auto min-h-screen">
+      <div className="text-center max-w-xl mx-auto mb-10">
+        <span className="text-xs font-bold text-[#681a72] dark:text-rose-400 uppercase tracking-wider">
+          Velora Help & Support
         </span>
-        <h1 className="text-3xl sm:text-5xl font-serif font-bold text-white tracking-wide">
-          Bespoke Concierge & Salon Reservation
+        <h1 className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white mt-1">
+          We're Here to Help You
         </h1>
-        <p className="text-xs sm:text-sm text-neutral-400 mt-3 font-light leading-relaxed">
-          Arrange an exclusive viewing session with a master horologist or sound architect at one of our private international salons.
+        <p className="text-xs text-gray-500 mt-1">
+          Have questions about your order, returns, or supplier registration? Reach out to our dedicated support team.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-        {/* Salon Contacts & Information */}
-        <div className="lg:col-span-5 space-y-6">
-          <div className="p-8 rounded-3xl glass-card border border-white/10 space-y-4">
-            <h3 className="text-lg font-serif font-bold text-white">Direct Concierge Telephony</h3>
-            <p className="text-xs text-neutral-400 font-light leading-relaxed">
-              Available 24 hours daily for private patrons, security escorts, and urgent allocation inquiries.
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+        {/* Contact Info */}
+        <div className="md:col-span-5 space-y-4">
+          <div className="bg-white dark:bg-[#1a1d24] border border-gray-200 dark:border-gray-800 rounded-xl p-6 shadow-xs space-y-4">
+            <h3 className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
+              <Headphones className="w-5 h-5 text-[#681a72] dark:text-rose-400" />
+              Velora Customer Care
+            </h3>
+            <p className="text-xs text-gray-500 leading-relaxed">
+              Available 7 days a week from 8:00 AM to 10:00 PM IST for assistance with orders, refunds, and inquiries.
             </p>
-            <div className="space-y-3 pt-2 text-xs font-mono">
-              <div className="flex items-center gap-3 text-neutral-300">
-                <Phone className="w-4 h-4 text-[#d4af37]" />
-                <span>+41 22 819 0900 (Geneva HQ)</span>
+
+            <div className="space-y-3 pt-2 text-xs text-gray-600 dark:text-gray-300">
+              <div className="flex items-center gap-3">
+                <Phone className="w-4 h-4 text-[#681a72] dark:text-rose-400 shrink-0" />
+                <span>080-61799600 (Toll-Free Helpline)</span>
               </div>
-              <div className="flex items-center gap-3 text-neutral-300">
-                <Mail className="w-4 h-4 text-[#d4af37]" />
-                <span>concierge@aurelia-atelier.luxury</span>
+              <div className="flex items-center gap-3">
+                <Mail className="w-4 h-4 text-[#681a72] dark:text-rose-400 shrink-0" />
+                <span>support@velora.in</span>
               </div>
-              <div className="flex items-center gap-3 text-neutral-300">
-                <MapPin className="w-4 h-4 text-[#d4af37]" />
-                <span>Rue du Rhône 42, 1204 Genève</span>
+              <div className="flex items-start gap-3">
+                <MapPin className="w-4 h-4 text-[#681a72] dark:text-rose-400 shrink-0 mt-0.5" />
+                <span>
+                  Velora Technologies Pvt. Ltd.<br />
+                  Velora Tech Park, Outer Ring Road, Bellandur,<br />
+                  Bengaluru, Karnataka 560103
+                </span>
               </div>
             </div>
           </div>
 
-          <div className="p-8 rounded-3xl glass-card border border-[#d4af37]/30 space-y-3">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-[#d4af37]">
-              White-Glove Armored Handover
-            </span>
-            <h4 className="text-sm font-semibold text-white">Direct Residence & Yacht Deliveries</h4>
-            <p className="text-xs text-neutral-400 leading-relaxed font-light">
-              We provide discreet armored vehicle handoff with authorized diplomatic couriers worldwide.
+          <div className="bg-rose-50 dark:bg-rose-950/20 border border-rose-100 dark:border-rose-900/30 rounded-xl p-5 space-y-1.5">
+            <h4 className="text-xs font-bold text-[#681a72] dark:text-rose-400">Grievance Officer</h4>
+            <p className="text-[11px] text-gray-600 dark:text-gray-400">
+              Name: Mr. Siddharth Rao<br />
+              Email: grievance-officer@velora.in<br />
+              Response SLA: Within 24-48 business hours
             </p>
           </div>
         </div>
 
-        {/* Reservation Form */}
-        <div className="lg:col-span-7 rounded-3xl glass-card border border-white/10 p-8 sm:p-10 shadow-2xl">
+        {/* Message Form */}
+        <div className="md:col-span-7 bg-white dark:bg-[#1a1d24] border border-gray-200 dark:border-gray-800 rounded-xl p-6 shadow-xs">
+          <h3 className="text-base font-bold text-gray-900 dark:text-white mb-1">
+            Send Us a Message
+          </h3>
+          <p className="text-xs text-gray-500 mb-4">
+            Fill out the form below and our team will get back to you shortly.
+          </p>
+
           {submitted ? (
-            <div className="py-16 text-center space-y-4">
-              <div className="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500 text-emerald-400 flex items-center justify-center mx-auto">
-                <Check className="w-8 h-8" />
-              </div>
-              <h3 className="text-2xl font-serif font-bold text-white">Private Salon Request Received</h3>
-              <p className="text-xs text-neutral-400 max-w-md mx-auto leading-relaxed">
-                Thank you, {formData.name}. Our Head of Private Client Relations will contact your representative within 2 hours to confirm security credentials and salon availability.
+            <div className="p-8 text-center text-emerald-600 space-y-2">
+              <Check className="w-10 h-10 mx-auto" />
+              <h4 className="font-bold text-sm">Message Received!</h4>
+              <p className="text-xs text-gray-500">
+                Our support team has logged ticket #TKT-{Math.floor(10000 + Math.random() * 90000)} and will reach out via SMS/Email within 4 hours.
               </p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <h3 className="text-lg font-serif font-bold text-white mb-2">Request Private Salon Appointment</h3>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="text-[11px] font-mono text-neutral-400 block mb-1">Patron Full Name</label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="e.g. Lord Julian Vance"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white outline-none focus:border-[#d4af37]"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-[11px] font-mono text-neutral-400 block mb-1">Private Email</label>
-                  <input
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="julian@aurelia.luxury"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white outline-none focus:border-[#d4af37]"
-                  />
-                </div>
+            <form onSubmit={handleSubmit} className="space-y-3">
+              <div>
+                <label className="text-xs font-semibold block mb-1">Your Full Name *</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Priya Sharma"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full text-xs p-2.5 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-gray-800 outline-none focus:border-[#681a72]"
+                />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="text-[11px] font-mono text-neutral-400 block mb-1">Telephone / Signal</label>
+                  <label className="text-xs font-semibold block mb-1">Phone Number *</label>
                   <input
                     type="tel"
+                    required
+                    placeholder="9876543210"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    placeholder="+1 (555) 000-0000"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white outline-none focus:border-[#d4af37]"
+                    className="w-full text-xs p-2.5 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-gray-800 outline-none focus:border-[#681a72]"
                   />
                 </div>
-
                 <div>
-                  <label className="text-[11px] font-mono text-neutral-400 block mb-1">Preferred Salon</label>
-                  <select
-                    value={formData.salon}
-                    onChange={(e) => setFormData({ ...formData, salon: e.target.value })}
-                    className="w-full bg-[#12131a] border border-white/10 rounded-xl px-4 py-3 text-xs text-white outline-none focus:border-[#d4af37]"
-                  >
-                    <option value="Geneva (Rue du Rhône)">Geneva • Rue du Rhône</option>
-                    <option value="Paris (Place Vendôme)">Paris • Place Vendôme</option>
-                    <option value="Tokyo (Ginza 6)">Tokyo • Ginza 6</option>
-                    <option value="New York (Madison Ave)">New York • Madison & 72nd</option>
-                    <option value="Private Residence / Yacht">Private Residence / Yacht</option>
-                  </select>
+                  <label className="text-xs font-semibold block mb-1">Email Address</label>
+                  <input
+                    type="email"
+                    placeholder="name@example.com"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="w-full text-xs p-2.5 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-gray-800 outline-none focus:border-[#681a72]"
+                  />
                 </div>
               </div>
 
               <div>
-                <label className="text-[11px] font-mono text-neutral-400 block mb-1">Creation of Primary Interest</label>
+                <label className="text-xs font-semibold block mb-1">Issue Category *</label>
                 <select
-                  value={formData.creationInterest}
-                  onChange={(e) => setFormData({ ...formData, creationInterest: e.target.value })}
-                  className="w-full bg-[#12131a] border border-white/10 rounded-xl px-4 py-3 text-xs text-white outline-none focus:border-[#d4af37]"
+                  value={formData.issueType}
+                  onChange={(e) => setFormData({ ...formData, issueType: e.target.value })}
+                  className="w-full text-xs p-2.5 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-gray-800 outline-none focus:border-[#681a72]"
                 >
-                  <option value="Haute Horlogerie Tourbillons">Haute Horlogerie Flying Tourbillons</option>
-                  <option value="Spatial Acoustics Beryllium">Planar Beryllium Spatial Audio</option>
-                  <option value="Electric Mobility Horizon">Vélure Horizon Electric Mobility</option>
-                  <option value="Sculptural Light Monoliths">Sensory Kinetic Light Monoliths</option>
-                  <option value="Bespoke Commission">Complete Bespoke One-Off Commission</option>
+                  <option value="Order & Delivery">Order & Delivery Status</option>
+                  <option value="Return & Refund">Return, Exchange or Refund</option>
+                  <option value="Payment Inquiry">Payment or COD Query</option>
+                  <option value="Supplier Registration">Supplier / Seller Registration</option>
+                  <option value="Other">Other Inquiry</option>
                 </select>
               </div>
 
               <div>
-                <label className="text-[11px] font-mono text-neutral-400 block mb-1">Special Requirements & Security Protocols</label>
+                <label className="text-xs font-semibold block mb-1">Describe Your Issue *</label>
                 <textarea
-                  rows={3}
-                  value={formData.notes}
-                  onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                  placeholder="Detail any security clearance, dietary preferences, or private vault handoff specifications."
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white outline-none focus:border-[#d4af37]"
+                  rows={4}
+                  required
+                  placeholder="Please provide order ID and details..."
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  className="w-full text-xs p-2.5 border border-gray-300 dark:border-gray-700 rounded-lg dark:bg-gray-800 outline-none focus:border-[#681a72]"
                 />
               </div>
 
-              <div className="pt-2">
-                <button
-                  type="submit"
-                  className="w-full py-4 rounded-2xl bg-[#d4af37] text-black font-mono font-bold text-xs uppercase tracking-widest hover:bg-[#c5a059] transition-all shadow-xl"
-                >
-                  Transmit Private Salon Request
-                </button>
-              </div>
+              <button
+                type="submit"
+                className="w-full py-3 bg-[#681a72] hover:bg-[#52135a] text-white font-bold text-xs rounded-xl shadow-md transition-all"
+              >
+                Submit Inquiry
+              </button>
             </form>
           )}
         </div>

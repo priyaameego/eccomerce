@@ -1,53 +1,16 @@
 import React from "react";
-import HeroSection from "@/components/home/HeroSection";
-import HomeAutoBanner from "@/components/home/HomeAutoBanner";
-import FlashSaleBanner from "@/components/home/FlashSaleBanner";
-import CategoryShowcase from "@/components/home/CategoryShowcase";
-import FeaturedProducts from "@/components/home/FeaturedProducts";
-import CraftsmanshipExperience from "@/components/home/CraftsmanshipExperience";
-import InteractiveLookbook from "@/components/home/InteractiveLookbook";
-import BrandPartners from "@/components/home/BrandPartners";
-import TestimonialSlider from "@/components/home/TestimonialSlider";
-import FAQPreview from "@/components/home/FAQPreview";
+import MeeshoHomeClient from "@/components/home/MeeshoHomeClient";
 
 export const metadata = {
-  title: "AURELIA • Haute Horlogerie & Advanced Material Atelier",
+  title: "Velora - Online Shopping India | Wholesale Prices, Designer Quality Fashion & Home",
   description:
-    "An Awwwards-inspired luxury eCommerce atelier crafting limited-run mechanical flying tourbillons, planar magnetic acoustics, kinetic footwear, and aerospace electric mobility.",
+    "Shop sarees, kurtis, dresses, men shirts, kids wear, electronics & home essentials at lowest wholesale prices with Free Delivery and Cash on Delivery on Velora.",
 };
 
 export default function HomePage() {
   return (
-    <main className="relative min-h-screen bg-[#090a0f] text-white selection:bg-[#d4af37] selection:text-black">
-      {/* Hero with Interactive 3D WebGL Three.js Canvas */}
-      <HeroSection />
-
-      {/* Auto-Changing Grand Atelier Showcase Banner */}
-      <HomeAutoBanner />
-
-      {/* Private Vernissage Window & Live Millisecond Countdown */}
-      <FlashSaleBanner />
-
-      {/* Disciplines Bento Showcase */}
-      <CategoryShowcase />
-
-      {/* Filterable Masterpieces Grid */}
-      <FeaturedProducts />
-
-      {/* Interactive Metallurgy & Raytracing Deep-Dive */}
-      <CraftsmanshipExperience />
-
-      {/* Patron Chronicles Lookbook In Situ */}
-      <InteractiveLookbook />
-
-      {/* Scientific Alliances & Accreditations */}
-      <BrandPartners />
-
-      {/* Discerning Patron Testimonials */}
-      <TestimonialSlider />
-
-      {/* Advisory & Collector FAQ */}
-      <FAQPreview />
+    <main className="min-h-screen">
+      <MeeshoHomeClient />
     </main>
   );
 }

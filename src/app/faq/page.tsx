@@ -2,50 +2,66 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { ChevronDown, HelpCircle, ShieldCheck, Sparkles, Search } from "lucide-react";
-import { sound } from "@/lib/sound";
+import { ChevronDown, HelpCircle, ShieldCheck, Sparkles, Search, Truck, RotateCcw, IndianRupee } from "lucide-react";
 
-const ALL_FAQS = [
+const VELORA_FAQS = [
   {
-    category: "Acquisitions & Delivery",
+    category: "Orders & Delivery",
     items: [
       {
-        q: "How does the Complimentary Armored Courier delivery operate?",
-        a: "Every acquisition above $1,500 qualifies for dedicated armored transport via Malca-Amit or Brinks Global. Deliveries are dispatched under continuous dual-custody surveillance with satellite tracking, arriving in tamper-evident sealed titanium security containers directly to your estate or private vault.",
+        q: "Are all deliveries on Velora completely free?",
+        a: "Yes! Velora provides 100% Free Delivery on millions of products across all pin codes in India without any minimum cart value requirement.",
       },
       {
-        q: "What international customs duties and taxes are calculated?",
-        a: "Our pricing incorporates DDP (Delivered Duty Paid) protocols where local import tariffs, Swiss export VAT, and carrier brokerage are fully settled by Aurelia prior to dispatch. There are zero surprise invoices upon reception.",
+        q: "How long does delivery take?",
+        a: "Orders are usually delivered within 3 to 5 business days depending on your location. You will receive real-time SMS updates with live tracking links once your package is dispatched.",
       },
       {
-        q: "Can I inspect the piece prior to final settlement?",
-        a: "Yes. By requesting a Private Salon appointment or booking an at-home concierge presentation, our horological and acoustic specialists will present the numbered creation for your personal evaluation.",
+        q: "How can I track my order?",
+        a: "Go to your 'Profile' → 'My Orders' and select your order to view the real-time courier tracking timeline (Order Placed → Supplier Shipped → In Transit → Out for Delivery).",
       },
     ],
   },
   {
-    category: "Horology & Authenticity",
+    category: "Returns & Refunds",
     items: [
       {
-        q: "What certifications accompany each Aurelia timepiece?",
-        a: "Every timepiece is delivered with a chronometer certificate from the Contrôle Officiel Suisse des Chronomètres (COSC) or the Poinçon de Genève, an NFC-embedded solid titanium provenance passport, and an archival certificate signed by the master watchmaker.",
+        q: "What is Velora's 7-Day Easy Return policy?",
+        a: "If you are not satisfied with your purchase, received the wrong size, or found any defects, you can request a return within 7 days of delivery. Our courier executive will pick up the item from your doorstep at zero cost.",
       },
       {
-        q: "How does the 5-Year Global Atelier Guarantee function?",
-        a: "The guarantee covers all mechanical irregularities, amplitude variances, and material defects. Furthermore, patrons receive complimentary ultrasonic servicing and gasket replacements every 24 months at any international salon.",
+        q: "How and when will I get my refund?",
+        a: "Refunds for Cash on Delivery (COD) orders are transferred instantly to your bank account or UPI ID as soon as the item is picked up by the delivery agent. Online payments are refunded back to the original source within 24-48 hours.",
+      },
+      {
+        q: "Can I exchange an item for a different size?",
+        a: "Yes! While placing a return request, simply choose the 'Exchange for different size' option, and the replacement size will be dispatched immediately.",
       },
     ],
   },
   {
-    category: "Materials & Acoustic Science",
+    category: "Payments & Safety",
     items: [
       {
-        q: "Why does Aurelia utilize planar magnetic transducers with vapor-deposited beryllium?",
-        a: "Beryllium is one of the stiffest yet lightest structural elements on earth. Vapor-depositing it onto micron-thin diaphragms ensures instantaneous transient response without cone flexing or harmonic smearing, achieving true raytraced acoustic clarity.",
+        q: "Is Cash on Delivery (COD) safe and available?",
+        a: "Yes, COD is available for 100% of products on Velora. You don't need to pay anything in advance; simply inspect the parcel and pay cash to the courier partner upon delivery.",
       },
       {
-        q: "Are the carbon monocoques recyclable or sustainable?",
-        a: "Our T1000 carbon weaves are cured using bio-derived epoxy resins, and all offcut composites are recycled into structural components for our kinetic mobility prototypes.",
+        q: "What online payment methods are supported?",
+        a: "We support all major payment modes: UPI (PhonePe, Google Pay, Paytm, BHIM), Debit & Credit Cards (Visa, MasterCard, RuPay), and Net Banking.",
+      },
+    ],
+  },
+  {
+    category: "Supplier & Reselling",
+    items: [
+      {
+        q: "How much commission does Velora charge sellers?",
+        a: "Velora charges 0% Commission from sellers! You keep 100% of your product profit margins. Payments are settled in your bank account every 7 days.",
+      },
+      {
+        q: "What documents are required to become a supplier?",
+        a: "You only need an active GSTIN (Goods and Services Tax Identification Number) and a valid Bank Account to register in under 5 minutes.",
       },
     ],
   },
@@ -58,37 +74,59 @@ export default function FAQPage() {
 
   const toggle = (key: string) => {
     setOpenItems((prev) => ({ ...prev, [key]: !prev[key] }));
-    sound.playClick();
   };
 
+  const categories = ["All", ...VELORA_FAQS.map((c) => c.category)];
+
+  const filteredCategories = VELORA_FAQS.filter((cat) => {
+    if (selectedCat !== "All" && cat.category !== selectedCat) return false;
+    return true;
+  }).map((cat) => ({
+    ...cat,
+    items: cat.items.filter(
+      (item) =>
+        item.q.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.a.toLowerCase().includes(searchQuery.toLowerCase())
+    ),
+  })).filter((cat) => cat.items.length > 0);
+
   return (
-    <div className="pt-28 pb-24 px-6 max-w-5xl mx-auto min-h-screen">
-      <div className="text-center max-w-2xl mx-auto mb-16">
-        <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#d4af37] flex items-center justify-center gap-2 mb-2">
-          <HelpCircle className="w-3.5 h-3.5" />
-          Patron Advisory Dossier
+    <div className="pt-6 pb-20 px-4 sm:px-6 max-w-5xl mx-auto min-h-screen">
+      {/* Header */}
+      <div className="mb-8 text-center space-y-2">
+        <span className="text-xs font-bold text-[#681a72] dark:text-rose-400 uppercase tracking-wider">
+          Velora Help Center
         </span>
-        <h1 className="text-3xl sm:text-5xl font-serif font-bold text-white tracking-wide">
-          Frequently Inquired Protocols
+        <h1 className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white">
+          How Can We Help You Today?
         </h1>
-        <p className="text-xs sm:text-sm text-neutral-400 mt-3 font-light leading-relaxed">
-          Comprehensive guidance regarding international armored logistics, Swiss chronometry certifications, and bespoke commissioning.
+        <p className="text-xs text-gray-500 max-w-md mx-auto">
+          Find quick answers about orders, delivery dates, 7-day returns, and seller registration.
         </p>
+
+        {/* Search */}
+        <div className="max-w-md mx-auto mt-4 relative">
+          <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search help topics (e.g. return, COD, delivery)..."
+            className="w-full text-xs pl-10 pr-4 py-2.5 bg-white dark:bg-[#1a1d24] border border-gray-300 dark:border-gray-700 rounded-xl outline-none focus:border-[#681a72]"
+          />
+        </div>
       </div>
 
       {/* Category Pills */}
-      <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
-        {["All", "Acquisitions & Delivery", "Horology & Authenticity", "Materials & Acoustic Science"].map((cat) => (
+      <div className="flex flex-wrap justify-center gap-2 mb-8">
+        {categories.map((cat) => (
           <button
             key={cat}
-            onClick={() => {
-              setSelectedCat(cat);
-              sound.playClick();
-            }}
-            className={`px-4 py-2 rounded-xl text-xs font-mono tracking-wider transition-all ${
+            onClick={() => setSelectedCat(cat)}
+            className={`text-xs px-3.5 py-1.5 rounded-full font-medium transition-all ${
               selectedCat === cat
-                ? "bg-[#d4af37] text-black font-bold shadow-lg"
-                : "glass-panel border-white/10 text-neutral-400 hover:text-white"
+                ? "bg-[#681a72] text-white shadow-sm"
+                : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:border-gray-400"
             }`}
           >
             {cat}
@@ -96,42 +134,40 @@ export default function FAQPage() {
         ))}
       </div>
 
-      {/* Accordion List */}
-      <div className="space-y-10">
-        {ALL_FAQS.filter((f) => selectedCat === "All" || f.category === selectedCat).map((group, gIdx) => (
-          <div key={gIdx} className="space-y-4">
-            <h3 className="text-xs font-mono uppercase tracking-widest text-[#d4af37]">
+      {/* FAQ Groups */}
+      <div className="space-y-6">
+        {filteredCategories.map((group, groupIdx) => (
+          <div
+            key={group.category}
+            className="bg-white dark:bg-[#1a1d24] border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-xs"
+          >
+            <h2 className="text-sm font-bold text-[#681a72] dark:text-rose-400 mb-3 pb-2 border-b border-gray-100 dark:border-gray-800">
               {group.category}
-            </h3>
+            </h2>
 
-            <div className="space-y-3">
-              {group.items.map((it, idx) => {
-                const key = `${gIdx}-${idx}`;
-                const isOpen = !!openItems[key];
+            <div className="space-y-2">
+              {group.items.map((item, itemIdx) => {
+                const key = `${groupIdx}-${itemIdx}`;
+                const isOpen = openItems[key];
                 return (
                   <div
-                    key={idx}
-                    className={`rounded-2xl border transition-all overflow-hidden ${
-                      isOpen
-                        ? "glass-panel border-[#d4af37]/40 bg-white/5"
-                        : "border-white/10 bg-white/5 hover:border-white/20"
-                    }`}
+                    key={item.q}
+                    className="border border-gray-100 dark:border-gray-800 rounded-xl overflow-hidden"
                   >
                     <button
                       onClick={() => toggle(key)}
-                      className="w-full p-5 text-left flex items-center justify-between gap-4"
+                      className="w-full text-left p-3.5 flex items-center justify-between text-xs sm:text-sm font-semibold text-gray-800 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                     >
-                      <span className="text-sm font-semibold text-white tracking-wide">{it.q}</span>
+                      <span>{item.q}</span>
                       <ChevronDown
-                        className={`w-4 h-4 text-[#d4af37] shrink-0 transition-transform duration-300 ${
-                          isOpen ? "rotate-180" : ""
+                        className={`w-4 h-4 text-gray-400 transition-transform ${
+                          isOpen ? "rotate-180 text-[#681a72] dark:text-rose-400" : ""
                         }`}
                       />
                     </button>
-
                     {isOpen && (
-                      <div className="px-5 pb-5 text-xs text-neutral-300 leading-relaxed font-light border-t border-white/5 pt-3">
-                        {it.a}
+                      <div className="p-3.5 pt-0 text-xs text-gray-600 dark:text-gray-400 leading-relaxed border-t border-gray-50 dark:border-gray-800/50">
+                        {item.a}
                       </div>
                     )}
                   </div>
@@ -142,16 +178,17 @@ export default function FAQPage() {
         ))}
       </div>
 
-      <div className="mt-16 text-center p-8 rounded-3xl glass-card border border-white/10 max-w-xl mx-auto">
-        <h4 className="text-base font-serif font-bold text-white mb-2">Unanswered Technical Inquiry?</h4>
-        <p className="text-xs text-neutral-400 mb-6">
-          Our Geneva horological and materials laboratory welcomes specific technical inquiries.
+      {/* Still need help? */}
+      <div className="mt-12 bg-rose-50 dark:bg-rose-950/20 border border-rose-100 dark:border-rose-900/30 rounded-2xl p-6 text-center max-w-xl mx-auto space-y-3">
+        <h3 className="text-sm font-bold text-gray-900 dark:text-white">Still have questions?</h3>
+        <p className="text-xs text-gray-500">
+          Our customer support team is available from 8 AM to 10 PM IST to assist you with any questions.
         </p>
         <Link
           href="/contact"
-          className="px-6 py-3 rounded-xl bg-[#d4af37] text-black font-mono font-bold text-xs uppercase tracking-wider inline-block hover:bg-[#c5a059] transition-all"
+          className="inline-block px-5 py-2.5 bg-[#681a72] hover:bg-[#52135a] text-white text-xs font-bold rounded-lg shadow-sm transition-all"
         >
-          Contact Master Horologist
+          Contact Customer Care
         </Link>
       </div>
     </div>

@@ -5,25 +5,25 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { items, total, shippingAddress, paymentMethod } = body;
 
-    const orderNumber = `AUR-2026-${Math.floor(1000 + Math.random() * 9000)}`;
-    const trackingCode = `MALCA-AMIT-SECURE-${Math.floor(100000 + Math.random() * 900000)}`;
+    const orderNumber = `VEL-${Math.floor(100000 + Math.random() * 900000)}`;
+    const trackingCode = `DELHIVERY-EXPRESS-${Math.floor(100000 + Math.random() * 900000)}`;
 
     return NextResponse.json({
       success: true,
-      message: "Atelier Acquisition Authorized & Vault Escrow Active",
+      message: "Order placed successfully on Velora!",
       order: {
         orderNumber,
         trackingCode,
         total,
-        status: "In Production",
-        estimatedDelivery: "3 Business Days via Armored Courier",
-        client: shippingAddress?.fullName || "Private Patron",
-        escrowProvider: paymentMethod === "razorpay" ? "Razorpay Escrow India" : "Stripe Swiss Escrow",
+        status: "Processing",
+        estimatedDelivery: "3-4 Business Days via Express Courier",
+        client: shippingAddress?.fullName || "Valued Customer",
+        paymentMethod: paymentMethod || "Cash on Delivery",
       },
     });
   } catch (error) {
     return NextResponse.json(
-      { success: false, message: "Transaction authorization failed." },
+      { success: false, message: "Order creation failed." },
       { status: 500 }
     );
   }

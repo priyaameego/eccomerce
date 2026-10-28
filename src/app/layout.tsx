@@ -1,58 +1,38 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Cinzel, Space_Grotesk } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
+import MobileBottomNav from "@/components/ui/MobileBottomNav";
 import CartDrawer from "@/components/ui/CartDrawer";
 import QuickViewModal from "@/components/ui/QuickViewModal";
 import SearchModal from "@/components/ui/SearchModal";
-import CustomCursor from "@/components/ui/CustomCursor";
 import ThemeProvider from "@/components/ui/ThemeProvider";
 
 const sansFont = Plus_Jakarta_Sans({
   variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-});
-
-const serifFont = Cinzel({
-  variable: "--font-serif",
-  subsets: ["latin"],
-  weight: ["400", "600", "700", "900"],
-});
-
-const monoFont = Space_Grotesk({
-  variable: "--font-mono",
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
-  title: "AURELIA • Haute Horlogerie & Advanced Material Atelier",
+  title: "VELORA • Premium Fashion & Wholesale Lifestyle Shopping India",
   description:
-    "An ultra-luxury atelier bridging Swiss mechanical horology, aerospace titanium metallurgy, planar magnetic acoustics, and generative design.",
+    "Experience Velora - India's favorite value & style destination. Shop authentic Banarasi sarees, designer kurtis, streetwear, home essentials, and electronics at lowest wholesale factory prices with Free Pan-India Delivery.",
   keywords: [
-    "Luxury Tourbillon",
-    "Haute Horlogerie",
-    "Planar Magnetic Headphones",
-    "Carbon Electric Scooter",
-    "Awwwards eCommerce",
-    "Swiss Watchmaking",
-    "Aurelia Atelier",
+    "Velora",
+    "Velora Fashion",
+    "Online Shopping India",
+    "Banarasi Sarees",
+    "Designer Kurtis",
+    "Men Casual Shirts",
+    "Home Decor",
+    "Free Delivery",
+    "Cash on Delivery",
+    "Wholesale Prices",
   ],
-  openGraph: {
-    title: "AURELIA • Haute Horlogerie & Advanced Material Atelier",
-    description: "The apex of material mastery and mechanical poetry.",
-    type: "website",
-    url: "https://aurelia-atelier.luxury",
-    images: [
-      {
-        url: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=85",
-        width: 1200,
-        height: 630,
-        alt: "Aurelia Celestial Tourbillon",
-      },
-    ],
+  icons: {
+    icon: "/favicon.ico",
   },
 };
 
@@ -64,26 +44,26 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${sansFont.variable} ${serifFont.variable} ${monoFont.variable} dark antialiased scroll-smooth`}
+      className={`${sansFont.variable} light antialiased scroll-smooth`}
     >
-      <body className="min-h-screen bg-[#090a0f] text-white flex flex-col font-sans selection:bg-[#d4af37] selection:text-black">
+      <body className="min-h-screen bg-[#f8f9fa] text-[#1e293b] flex flex-col font-sans selection:bg-[#681a72] selection:text-white pb-14 sm:pb-0">
         <ThemeProvider>
-          {/* Luxury Custom Magnetic Cursor */}
-          <CustomCursor />
-
-          {/* Global Luxury Header */}
+          {/* Velora Global Header */}
           <Navbar />
 
-          {/* Dynamic Page Children */}
+          {/* Page Content */}
           <div className="flex-1">{children}</div>
 
-          {/* Global Luxury Footer */}
-          <Footer />
+          {/* Mobile Bottom Navigation Bar */}
+          <MobileBottomNav />
 
           {/* Global Modals & Drawers */}
           <CartDrawer />
           <QuickViewModal />
           <SearchModal />
+
+          {/* Velora Global Footer */}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
