@@ -66,6 +66,7 @@ export interface Product {
     productsCount: number;
     isTrusted: boolean;
   };
+
   reviews: ProductReview[];
 }
 
@@ -201,6 +202,7 @@ export const CATEGORIES = [
       "Home Appliances",
     ],
   },
+
 ];
 
 export const PRODUCTS: Product[] = [

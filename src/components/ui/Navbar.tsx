@@ -400,9 +400,9 @@ export default function Navbar() {
       </div>
 
       {/* 2. SECONDARY CATEGORY MEGA NAVIGATION BAR (Desktop) */}
-      <nav className="border-t border-purple-100/60 dark:border-purple-950/40 hidden lg:block bg-white/90 dark:bg-[#0f172a]/90 backdrop-blur-md">
+      <nav className="border-t border-purple-100/60 dark:border-purple-950/40 hidden lg:block bg-white/95 dark:bg-[#0f172a] backdrop-blur-md transition-colors">
         <div className="max-w-7xl mx-auto px-6 relative">
-          <ul className="flex items-center justify-between text-xs font-normal text-gray-700 dark:text-gray-300 py-1">
+          <ul className="flex items-center justify-between text-xs py-1">
             {CATEGORIES.map((cat) => (
               <li
                 key={cat.id}
@@ -415,7 +415,7 @@ export default function Navbar() {
               >
                 <Link
                   href={`/shop?category=${encodeURIComponent(cat.name)}`}
-                  className="font-medium whitespace-nowrap block"
+                  className="font-semibold text-gray-800 dark:text-gray-100 group-hover:text-[#681a72] dark:group-hover:text-[#c084fc] whitespace-nowrap block transition-colors"
                 >
                   {cat.name}
                 </Link>

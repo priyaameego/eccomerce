@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   :root {
     --background: #fbfbfb;
@@ -57,27 +59,36 @@ body {
    ========================================================================= */
 
 @keyframes float3d {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px) rotate(0deg);
   }
+
   50% {
     transform: translateY(-6px) rotate(0.4deg);
   }
 }
 
 @keyframes float3dSlow {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-8px);
   }
 }
 
 @keyframes pulseGlow {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 12px rgba(225, 29, 72, 0.35);
   }
+
   50% {
     box-shadow: 0 0 22px rgba(225, 29, 72, 0.7);
   }
@@ -87,9 +98,11 @@ body {
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
@@ -99,6 +112,7 @@ body {
   0% {
     transform: translateX(-100%) skewX(-15deg);
   }
+
   100% {
     transform: translateX(250%) skewX(-15deg);
   }
@@ -119,6 +133,23 @@ body {
 
 .animate-pulse-glow {
   animation: pulseGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes kenBurnsSlow {
+  0% {
+    transform: scale(1.0) translate(0%, 0%);
+  }
+  50% {
+    transform: scale(1.12) translate(-1.2%, -0.8%);
+  }
+  100% {
+    transform: scale(1.06) translate(1%, 0.5%);
+  }
+}
+
+.animate-ken-burns {
+  animation: kenBurnsSlow 16s ease-in-out infinite alternate;
+  will-change: transform;
 }
 
 /* =========================================================================
@@ -251,20 +282,60 @@ body {
 }
 
 /* =========================================================================
-   DARK MODE OVERRIDES
+   DARK & LIGHT MODE CONTRAST REFINEMENT
    ========================================================================= */
 
+html.dark {
+  color-scheme: dark;
+}
+
 html.dark body {
-  background-color: #0a0e17 !important;
+  background-color: #0b0f19 !important;
   color: #f8fafc !important;
 }
 
+/* Glass Navbar in Dark Mode */
 html.dark .glass-nav-3d {
-  background: rgba(15, 23, 42, 0.92) !important;
-  border-bottom: 1px solid rgba(192, 132, 252, 0.12) !important;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6) !important;
+  background: rgba(11, 15, 25, 0.96) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7) !important;
 }
 
+/* Category secondary mega navigation bar in Dark Mode */
+html.dark nav {
+  background-color: #0f172a !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Category links in Navbar: ultra-clear contrast in both themes */
+html.dark .category-pill-3d a {
+  color: #f1f5f9 !important;
+  font-weight: 600;
+}
+
+html.dark .category-pill-3d:hover {
+  background: rgba(30, 41, 59, 0.95) !important;
+  box-shadow: 0 4px 14px -2px rgba(192, 132, 252, 0.25) !important;
+}
+
+html.dark .category-pill-3d:hover a {
+  color: #f0abfc !important;
+}
+
+html.light .category-pill-3d a {
+  color: #334155 !important;
+  font-weight: 600;
+}
+
+html.light .category-pill-3d:hover {
+  background: rgba(253, 242, 250, 0.9) !important;
+}
+
+html.light .category-pill-3d:hover a {
+  color: #681a72 !important;
+}
+
+/* Velora Cards in Dark Mode */
 html.dark .velora-card {
   background-color: #151c2c !important;
   border-color: #242f44 !important;
@@ -274,44 +345,4 @@ html.dark .velora-card:hover,
 html.dark .card-3d-hover:hover {
   border-color: #c084fc !important;
   box-shadow: 0 18px 40px -10px rgba(192, 132, 252, 0.25) !important;
-}
-
-html.dark .category-pill-3d:hover {
-  background: linear-gradient(180deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.9) 100%) !important;
-  color: #f0abfc !important;
-  box-shadow: 0 4px 14px -2px rgba(192, 132, 252, 0.15) !important;
-}
-
-html.dark .bg-white {
-  background-color: #151c2c !important;
-}
-
-html.dark .bg-gray-50,
-html.dark .bg-gray-100 {
-  background-color: #0f172a !important;
-}
-
-html.dark .border-gray-200,
-html.dark .border-gray-100 {
-  border-color: #242f44 !important;
-}
-
-html.dark .text-gray-900 {
-  color: #f8fafc !important;
-}
-
-html.dark .text-gray-800 {
-  color: #f1f5f9 !important;
-}
-
-html.dark .text-gray-700 {
-  color: #e2e8f0 !important;
-}
-
-html.dark .text-gray-600 {
-  color: #cbd5e1 !important;
-}
-
-html.dark .text-gray-500 {
-  color: #94a3b8 !important;
 }

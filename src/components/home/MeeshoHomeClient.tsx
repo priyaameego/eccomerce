@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { PRODUCTS, CATEGORIES, Product } from "@/data/products";
 import ProductCard from "@/components/ui/ProductCard";
+import HeroBanner3DSlider from "./HeroBanner3DSlider";
 
 export default function MeeshoHomeClient() {
   // Selected Filters
@@ -138,104 +139,25 @@ export default function MeeshoHomeClient() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] dark:bg-[#0f172a]">
-      {/* 1. HERO VALUE PROPOSITION BANNER */}
-      <section className="max-w-7xl mx-auto px-3 sm:px-6 pt-3 sm:pt-4 pb-4 sm:pb-6">
-        <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-r from-[#681a72] via-[#86198f] to-[#e11d48] text-white shadow-2xl border border-purple-400/20">
-          <div className="grid grid-cols-1 md:grid-cols-12 items-center p-5 sm:p-10 lg:p-12 gap-6 sm:gap-8">
-            {/* Left Copy */}
-            <div className="md:col-span-7 space-y-3 sm:space-y-4">
-              <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-wider text-white shadow-sm animate-float-3d">
-                <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-                <span>Elevated Style • Wholesale Prices</span>
-              </div>
-
-              <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight drop-shadow-sm">
-                Wholesale Prices, <br className="hidden sm:inline" />
-                Designer Quality.
-              </h1>
-
-              <p className="text-xs sm:text-sm text-purple-100 max-w-lg leading-relaxed">
-                Direct factory collections from Surat, Jaipur & Tirupur weavers. Free Pan-India Delivery & Cash on Delivery available on every order.
-              </p>
-
-              {/* 3 Pillars Badges with 3D Depth */}
-              <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-1 sm:pt-2">
-                <div className="bg-white/15 backdrop-blur-md p-2 sm:p-2.5 rounded-2xl border border-white/20 flex flex-col items-center text-center shadow-lg transition-transform hover:-translate-y-1">
-                  <Truck className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-300 mb-0.5 sm:mb-1" />
-                  <span className="text-[10px] sm:text-xs font-bold">Free Delivery</span>
-                  <span className="text-[9px] text-purple-200 hidden sm:inline">On all orders</span>
-                </div>
-                <div className="bg-white/15 backdrop-blur-md p-2 sm:p-2.5 rounded-2xl border border-white/20 flex flex-col items-center text-center shadow-lg transition-transform hover:-translate-y-1">
-                  <IndianRupee className="w-4 h-4 sm:w-5 sm:h-5 text-amber-300 mb-0.5 sm:mb-1" />
-                  <span className="text-[10px] sm:text-xs font-bold">Cash On Delivery</span>
-                  <span className="text-[9px] text-purple-200 hidden sm:inline">Pay at doorstep</span>
-                </div>
-                <div className="bg-white/15 backdrop-blur-md p-2 sm:p-2.5 rounded-2xl border border-white/20 flex flex-col items-center text-center shadow-lg transition-transform hover:-translate-y-1">
-                  <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5 text-sky-300 mb-0.5 sm:mb-1" />
-                  <span className="text-[10px] sm:text-xs font-bold">Easy Returns</span>
-                  <span className="text-[9px] text-purple-200 hidden sm:inline">7 days refund</span>
-                </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex items-center gap-2.5 sm:gap-3 pt-2">
-                <a
-                  href="#products-section"
-                  className="px-5 sm:px-6 py-2.5 sm:py-3 bg-white text-[#681a72] hover:bg-purple-50 font-bold text-xs sm:text-sm rounded-xl shadow-lg transition-all duration-200 flex items-center gap-1.5 active:scale-95 hover:-translate-y-0.5"
-                >
-                  <ShoppingBag className="w-4 h-4" />
-                  <span>Start Shopping</span>
-                </a>
-                <a
-                  href="https://play.google.com/store"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-4 sm:px-5 py-2.5 sm:py-3 bg-black/25 hover:bg-black/40 text-white font-medium text-xs sm:text-sm rounded-xl border border-white/20 transition-all duration-200 flex items-center gap-1.5 active:scale-95 hover:-translate-y-0.5"
-                >
-                  <Smartphone className="w-4 h-4 text-emerald-300" />
-                  <span>Get App</span>
-                </a>
-              </div>
-            </div>
-
-            {/* Right Visual Image with 3D Float */}
-            <div className="md:col-span-5 relative hidden md:block">
-              <div className="relative w-full aspect-square max-w-sm mx-auto rounded-3xl overflow-hidden shadow-2xl border-4 border-white/25 sheen-overlay animate-float-slow">
-                <Image
-                  src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80"
-                  alt="Velora Festive Collection"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-5">
-                  <div className="text-white">
-                    <span className="bg-[#e11d48] text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wide shadow-md">
-                      Festive Collection
-                    </span>
-                    <p className="font-extrabold text-base mt-1.5">Direct from Surat Mills • From ₹149</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+    <div className="min-h-screen bg-[#f8f9fa] dark:bg-[#0b0f19] text-gray-900 dark:text-gray-100 transition-colors">
+      {/* 1. 3D ANIMATED HERO BANNER SLIDER (4 High-Definition Wholesale Slides) */}
+      <HeroBanner3DSlider />
 
       {/* 2. TOP CATEGORIES TO CHOOSE FROM (Mobile swipeable horizontal slider) */}
-      <section className="max-w-7xl mx-auto px-3 sm:px-6 py-3 sm:py-4">
+      <section id="home-categories-section" className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-6">
         <div className="flex items-center justify-between mb-3">
           <div>
-            <h2 className="text-base sm:text-xl font-bold text-gray-900 dark:text-white">
+            <h2 className="text-base sm:text-xl font-extrabold text-gray-900 dark:text-white tracking-tight">
               Top Categories to Choose From
             </h2>
-            <p className="text-[11px] sm:text-xs text-gray-500">Explore authentic Indian wholesale trends</p>
+            <p className="text-[11px] sm:text-xs text-gray-600 dark:text-gray-400 mt-0.5">
+              Explore authentic Indian wholesale trends from verified textile hubs
+            </p>
           </div>
           {selectedCategory !== "all" && (
             <button
               onClick={() => setSelectedCategory("all")}
-              className="text-xs text-[#681a72] dark:text-[#c084fc] font-bold hover:underline"
+              className="text-xs text-[#681a72] dark:text-[#c084fc] font-bold hover:underline cursor-pointer"
             >
               Clear Filter
             </button>
@@ -256,8 +178,8 @@ export default function MeeshoHomeClient() {
                 }}
                 className={`flex flex-col items-center group text-center p-2 rounded-2xl shrink-0 sm:shrink transition-all duration-300 snap-start cursor-pointer ${
                   isSelected
-                    ? "bg-purple-100/80 dark:bg-purple-950/50 shadow-md ring-2 ring-[#681a72] dark:ring-[#c084fc] -translate-y-1"
-                    : "hover:bg-white dark:hover:bg-gray-800 hover:-translate-y-1.5 hover:shadow-lg"
+                    ? "bg-purple-100/90 dark:bg-purple-950/60 shadow-md ring-2 ring-[#681a72] dark:ring-[#c084fc] -translate-y-1"
+                    : "bg-white/80 dark:bg-[#151c2c]/80 border border-gray-200/70 dark:border-gray-800 hover:bg-white dark:hover:bg-[#151c2c] hover:-translate-y-1.5 hover:shadow-lg"
                 }`}
               >
                 <div
@@ -275,7 +197,9 @@ export default function MeeshoHomeClient() {
                 </div>
                 <span
                   className={`text-[11px] sm:text-xs font-semibold leading-tight w-18 sm:w-auto truncate transition-colors ${
-                    isSelected ? "text-[#681a72] dark:text-[#c084fc] font-bold" : "text-gray-700 dark:text-gray-300 group-hover:text-[#681a72]"
+                    isSelected
+                      ? "text-[#681a72] dark:text-[#c084fc] font-bold"
+                      : "text-gray-800 dark:text-gray-100 group-hover:text-[#681a72] dark:group-hover:text-[#c084fc]"
                   }`}
                 >
                   {cat.name}
@@ -328,7 +252,7 @@ export default function MeeshoHomeClient() {
             <h2 className="text-lg sm:text-2xl font-bold text-gray-900 dark:text-white">
               Products For You
             </h2>
-            <p className="text-[11px] sm:text-xs text-gray-500">
+            <p className="text-[11px] sm:text-xs text-gray-600 dark:text-gray-400">
               Showing {filteredProducts.length} items from verified manufacturers
             </p>
           </div>
@@ -337,19 +261,19 @@ export default function MeeshoHomeClient() {
             {/* Mobile Filter Button */}
             <button
               onClick={() => setMobileFilterOpen(true)}
-              className="lg:hidden flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg text-xs font-semibold text-gray-700 dark:text-gray-300 shadow-xs"
+              className="lg:hidden flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-[#151c2c] border border-gray-300 dark:border-gray-700 rounded-lg text-xs font-semibold text-gray-800 dark:text-gray-200 shadow-xs cursor-pointer"
             >
-              <Filter className="w-3.5 h-3.5 text-[#681a72]" />
+              <Filter className="w-3.5 h-3.5 text-[#681a72] dark:text-[#c084fc]" />
               <span>Filters</span>
             </button>
 
             {/* Sort Dropdown */}
             <div className="flex items-center gap-1.5 text-xs">
-              <span className="text-gray-500 hidden sm:inline">Sort:</span>
+              <span className="text-gray-500 dark:text-gray-400 hidden sm:inline">Sort:</span>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}
-                className="bg-white dark:bg-[#1e293b] border border-gray-300 dark:border-gray-700 rounded-lg px-2 py-1.5 text-xs text-gray-800 dark:text-gray-200 focus:outline-none focus:border-[#681a72]"
+                className="bg-white dark:bg-[#151c2c] border border-gray-300 dark:border-gray-700 rounded-lg px-2 py-1.5 text-xs text-gray-800 dark:text-gray-200 focus:outline-none focus:border-[#681a72]"
               >
                 <option value="relevance">Popular</option>
                 <option value="price-asc">Price (Low to High)</option>
@@ -363,7 +287,7 @@ export default function MeeshoHomeClient() {
         {/* 2-Column Layout: Sidebar (Desktop) + Products Grid (Mobile 2 cols, Desktop 4 cols) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           {/* DESKTOP FILTERS SIDEBAR */}
-          <aside className="hidden lg:block lg:col-span-3 bg-white dark:bg-[#1e293b] border border-gray-200 dark:border-gray-800 rounded-2xl p-4 shadow-xs sticky top-24 space-y-5">
+          <aside className="hidden lg:block lg:col-span-3 bg-white dark:bg-[#151c2c] border border-gray-200 dark:border-gray-800 rounded-2xl p-4 shadow-xs sticky top-24 space-y-5">
             <div className="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-gray-800">
               <span className="font-bold text-sm text-gray-900 dark:text-white flex items-center gap-1.5">
                 <Filter className="w-4 h-4 text-[#681a72]" />
