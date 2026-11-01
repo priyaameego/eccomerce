@@ -57,6 +57,8 @@ interface AuthState {
   isAuthenticated: boolean;
   login: (phoneOrEmail: string, otp?: string) => { success: boolean; message: string };
   loginWithOtp: (name: string, phone: string, email?: string) => { success: boolean; message: string };
+  loginAsAdmin: () => void;
+  loginAsSeller: (storeName?: string) => void;
   logout: () => void;
   updateProfile: (updates: Partial<UserProfile>) => void;
   addAddress: (address: Omit<UserAddress, "id">) => void;
@@ -145,6 +147,46 @@ export const useAuthStore = create<AuthState>()(
           return { success: false, message: "Please enter your mobile number or email." };
         }
         return get().loginWithOtp("Velora Customer", phoneOrEmail);
+      },
+
+      loginAsAdmin: () => {
+        const adminUser: UserProfile = {
+          id: "admin_super_01",
+          name: "Velora Super Admin",
+          email: "admin@velora.com",
+          role: "admin",
+          walletBalance: 145000,
+          coins: 2500,
+          phone: "+91 98765 43210",
+          avatar: "",
+          addresses: [],
+          orders: [],
+        };
+        set({
+          user: adminUser,
+          token: `admin_token_${Date.now()}`,
+          isAuthenticated: true,
+        });
+      },
+
+      loginAsSeller: (storeName = "Surat Textile Hub") => {
+        const sellerUser: UserProfile = {
+          id: `seller_${Date.now()}`,
+          name: storeName,
+          email: "seller@velora.com",
+          role: "supplier",
+          walletBalance: 48900,
+          coins: 1200,
+          phone: "+91 91234 56789",
+          avatar: "",
+          addresses: [],
+          orders: [],
+        };
+        set({
+          user: sellerUser,
+          token: `seller_token_${Date.now()}`,
+          isAuthenticated: true,
+        });
       },
 
       logout: () => {

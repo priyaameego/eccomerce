@@ -10,6 +10,7 @@ interface PreferencesState {
   quickViewProduct: Product | null;
   isSearchOpen: boolean;
   isMegaMenuOpen: boolean;
+  isAuthModalOpen: boolean;
   activeMegaCategory: string;
 
   setCurrency: (currency: Currency) => void;
@@ -20,6 +21,7 @@ interface PreferencesState {
   closeQuickView: () => void;
   setSearchOpen: (val: boolean) => void;
   setMegaMenuOpen: (val: boolean) => void;
+  setAuthModalOpen: (val: boolean) => void;
   setActiveMegaCategory: (cat: string) => void;
 }
 
@@ -31,6 +33,7 @@ export const usePreferencesStore = create<PreferencesState>((set) => ({
   quickViewProduct: null,
   isSearchOpen: false,
   isMegaMenuOpen: false,
+  isAuthModalOpen: false,
   activeMegaCategory: "Women Ethnic",
 
   setCurrency: (currency) => set({ currency }),
@@ -41,5 +44,6 @@ export const usePreferencesStore = create<PreferencesState>((set) => ({
   closeQuickView: () => set({ quickViewProduct: null }),
   setSearchOpen: (val) => set({ isSearchOpen: val }),
   setMegaMenuOpen: (val) => set({ isMegaMenuOpen: val }),
+  setAuthModalOpen: (val) => set({ isAuthModalOpen: val }),
   setActiveMegaCategory: (cat) => set({ activeMegaCategory: cat }),
 }));

@@ -7,6 +7,7 @@ import MobileBottomNav from "@/components/ui/MobileBottomNav";
 import CartDrawer from "@/components/ui/CartDrawer";
 import QuickViewModal from "@/components/ui/QuickViewModal";
 import SearchModal from "@/components/ui/SearchModal";
+import AuthModal from "@/components/ui/AuthModal";
 import ThemeProvider from "@/components/ui/ThemeProvider";
 
 const sansFont = Plus_Jakarta_Sans({
@@ -61,6 +62,7 @@ export default function RootLayout({
           <CartDrawer />
           <QuickViewModal />
           <SearchModal />
+          <AuthModal />
 
           {/* Velora Global Footer */}
           <Footer />

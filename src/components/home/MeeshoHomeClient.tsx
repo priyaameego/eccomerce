@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -15,9 +15,12 @@ import {
   QrCode,
   ArrowRight,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   ShoppingBag,
   Flame,
   X,
+  Zap,
 } from "lucide-react";
 import { PRODUCTS, CATEGORIES, Product } from "@/data/products";
 import ProductCard from "@/components/ui/ProductCard";
@@ -39,6 +42,33 @@ export default function MeeshoHomeClient() {
 
   // FAQ Accordion State
   const [openFaqIdx, setOpenFaqIdx] = useState<number | null>(0);
+
+  // Categories horizontal scroll ref & controls
+  const categoriesScrollRef = useRef<HTMLDivElement>(null);
+  const scrollCategories = (direction: "left" | "right") => {
+    if (categoriesScrollRef.current) {
+      const scrollAmount = direction === "left" ? -320 : 320;
+      categoriesScrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
+  };
+
+  // Live order social proof ticker
+  const [recentOrderIndex, setRecentOrderIndex] = useState(0);
+  const [showLiveOrderToast, setShowLiveOrderToast] = useState(true);
+
+  const recentOrdersList = [
+    { name: "Pooja S.", city: "Lucknow", item: "Kashvi Banarasi Silk Saree", time: "2 mins ago" },
+    { name: "Amit K.", city: "Surat", item: "Bio-Washed Oversized Cotton Tee", time: "4 mins ago" },
+    { name: "Sunita M.", city: "Jaipur", item: "Kundan Pearl Choker Set", time: "5 mins ago" },
+    { name: "Vikas R.", city: "Pune", item: "Stretch Comfort Chino Trousers", time: "8 mins ago" },
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setRecentOrderIndex((prev) => (prev + 1) % recentOrdersList.length);
+    }, 7000);
+    return () => clearInterval(timer);
+  }, [recentOrdersList.length]);
 
   // Available Fabrics from products
   const fabrics = useMemo(() => {
@@ -140,12 +170,57 @@ export default function MeeshoHomeClient() {
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] dark:bg-[#0b0f19] text-gray-900 dark:text-gray-100 transition-colors">
-      {/* 1. 3D ANIMATED HERO BANNER SLIDER (4 High-Definition Wholesale Slides) */}
+      {/* 1. ULTRA-PREMIUM 3D FASHION HERO SLIDER BANNER (Ken Burns + Crossfade + Touch Swipe) */}
       <HeroBanner3DSlider />
 
-      {/* 2. TOP CATEGORIES TO CHOOSE FROM (Mobile swipeable horizontal slider) */}
-      <section id="home-categories-section" className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-6">
-        <div className="flex items-center justify-between mb-3">
+      {/* MEESHO-STYLE WHOLESALE TRUST & ASSURANCE BAR */}
+      <section className="max-w-7xl mx-auto px-3 sm:px-6 pt-4 pb-1">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
+          <div className="flex items-center gap-2.5 sm:gap-3 p-3 sm:p-3.5 rounded-2xl bg-white dark:bg-[#151c2c] border border-gray-200/80 dark:border-gray-800 shadow-xs hover:border-[#681a72]/30 transition-colors">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-purple-50 dark:bg-purple-950/40 text-[#681a72] dark:text-[#c084fc] flex items-center justify-center shrink-0">
+              <Truck className="w-4 h-4 sm:w-5 sm:h-5" />
+            </div>
+            <div className="min-w-0">
+              <h4 className="text-xs sm:text-sm font-bold text-gray-900 dark:text-white truncate">Free Delivery</h4>
+              <p className="text-[10px] sm:text-[11px] text-gray-500 dark:text-gray-400 truncate">Zero minimum order</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2.5 sm:gap-3 p-3 sm:p-3.5 rounded-2xl bg-white dark:bg-[#151c2c] border border-gray-200/80 dark:border-gray-800 shadow-xs hover:border-emerald-500/30 transition-colors">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+              <IndianRupee className="w-4 h-4 sm:w-5 sm:h-5" />
+            </div>
+            <div className="min-w-0">
+              <h4 className="text-xs sm:text-sm font-bold text-gray-900 dark:text-white truncate">Cash on Delivery</h4>
+              <p className="text-[10px] sm:text-[11px] text-gray-500 dark:text-gray-400 truncate">Pay at your doorstep</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2.5 sm:gap-3 p-3 sm:p-3.5 rounded-2xl bg-white dark:bg-[#151c2c] border border-gray-200/80 dark:border-gray-800 shadow-xs hover:border-amber-500/30 transition-colors">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+              <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5" />
+            </div>
+            <div className="min-w-0">
+              <h4 className="text-xs sm:text-sm font-bold text-gray-900 dark:text-white truncate">7 Days Easy Return</h4>
+              <p className="text-[10px] sm:text-[11px] text-gray-500 dark:text-gray-400 truncate">100% instant refund</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2.5 sm:gap-3 p-3 sm:p-3.5 rounded-2xl bg-white dark:bg-[#151c2c] border border-gray-200/80 dark:border-gray-800 shadow-xs hover:border-rose-500/30 transition-colors">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0">
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
+            </div>
+            <div className="min-w-0">
+              <h4 className="text-xs sm:text-sm font-bold text-gray-900 dark:text-white truncate">Wholesale Prices</h4>
+              <p className="text-[10px] sm:text-[11px] text-gray-500 dark:text-gray-400 truncate">Direct from Surat mills</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. TOP CATEGORIES TO CHOOSE FROM (Clean Horizontal Carousel with Desktop Controls & No Box Overflow) */}
+      <section id="home-categories-section" className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-5">
+        <div className="flex items-center justify-between mb-3.5">
           <div>
             <h2 className="text-base sm:text-xl font-extrabold text-gray-900 dark:text-white tracking-tight">
               Top Categories to Choose From
@@ -154,18 +229,40 @@ export default function MeeshoHomeClient() {
               Explore authentic Indian wholesale trends from verified textile hubs
             </p>
           </div>
-          {selectedCategory !== "all" && (
-            <button
-              onClick={() => setSelectedCategory("all")}
-              className="text-xs text-[#681a72] dark:text-[#c084fc] font-bold hover:underline cursor-pointer"
-            >
-              Clear Filter
-            </button>
-          )}
+          <div className="flex items-center gap-2">
+            {selectedCategory !== "all" && (
+              <button
+                onClick={() => setSelectedCategory("all")}
+                className="text-xs text-[#681a72] dark:text-[#c084fc] font-bold hover:underline cursor-pointer mr-2"
+              >
+                Clear Filter
+              </button>
+            )}
+            {/* Desktop / Tablet Scroll Chevrons */}
+            <div className="hidden sm:flex items-center gap-1.5">
+              <button
+                onClick={() => scrollCategories("left")}
+                aria-label="Scroll left"
+                className="w-8 h-8 rounded-full bg-white dark:bg-[#151c2c] border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-center shadow-xs cursor-pointer active:scale-95 transition-all"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => scrollCategories("right")}
+                aria-label="Scroll right"
+                className="w-8 h-8 rounded-full bg-white dark:bg-[#151c2c] border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-center shadow-xs cursor-pointer active:scale-95 transition-all"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* Categories: Horizontal Swipe on Mobile, Grid on Desktop with 3D Float */}
-        <div className="flex sm:grid sm:grid-cols-5 md:grid-cols-9 gap-3 sm:gap-4 overflow-x-auto scrollbar-none pb-2 -mx-3 px-3 sm:mx-0 sm:px-0 snap-x">
+        {/* Categories: Smooth Horizontal Carousel with Generous Sizing (Text ALWAYS inside box) */}
+        <div
+          ref={categoriesScrollRef}
+          className="flex gap-3 sm:gap-3.5 overflow-x-auto scrollbar-none pb-3 px-1 -mx-1 snap-x scroll-smooth"
+        >
           {CATEGORIES.map((cat) => {
             const isSelected = selectedCategory === cat.name;
             return (
@@ -176,14 +273,14 @@ export default function MeeshoHomeClient() {
                   const el = document.getElementById("products-section");
                   if (el) el.scrollIntoView({ behavior: "smooth" });
                 }}
-                className={`flex flex-col items-center group text-center p-2 rounded-2xl shrink-0 sm:shrink transition-all duration-300 snap-start cursor-pointer ${
+                className={`group relative flex flex-col items-center justify-between text-center p-3 sm:p-3.5 pb-3.5 sm:pb-4 rounded-2xl shrink-0 transition-all duration-300 snap-start cursor-pointer w-[105px] sm:w-[125px] min-h-[148px] sm:min-h-[168px] ${
                   isSelected
-                    ? "bg-purple-100/90 dark:bg-purple-950/60 shadow-md ring-2 ring-[#681a72] dark:ring-[#c084fc] -translate-y-1"
-                    : "bg-white/80 dark:bg-[#151c2c]/80 border border-gray-200/70 dark:border-gray-800 hover:bg-white dark:hover:bg-[#151c2c] hover:-translate-y-1.5 hover:shadow-lg"
+                    ? "bg-purple-100/90 dark:bg-purple-950/70 shadow-md ring-2 ring-[#681a72] dark:ring-[#c084fc] -translate-y-1"
+                    : "bg-white dark:bg-[#151c2c] border border-gray-200/80 dark:border-gray-800 hover:bg-white dark:hover:bg-[#151c2c] hover:-translate-y-1.5 hover:shadow-lg"
                 }`}
               >
                 <div
-                  className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden mb-2 shadow-md border-2 transition-all duration-300 group-hover:scale-108 group-hover:shadow-[0_8px_20px_rgba(104,26,114,0.25)] ${
+                  className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden mb-2 shadow-sm border-2 transition-all duration-300 group-hover:scale-108 group-hover:shadow-[0_6px_16px_rgba(104,26,114,0.2)] ${
                     isSelected ? "border-[#681a72] dark:border-[#c084fc]" : "border-gray-200 dark:border-gray-700"
                   }`}
                 >
@@ -195,15 +292,17 @@ export default function MeeshoHomeClient() {
                     sizes="80px"
                   />
                 </div>
-                <span
-                  className={`text-[11px] sm:text-xs font-semibold leading-tight w-18 sm:w-auto truncate transition-colors ${
-                    isSelected
-                      ? "text-[#681a72] dark:text-[#c084fc] font-bold"
-                      : "text-gray-800 dark:text-gray-100 group-hover:text-[#681a72] dark:group-hover:text-[#c084fc]"
-                  }`}
-                >
-                  {cat.name}
-                </span>
+                <div className="w-full flex items-center justify-center min-h-[2.5rem] mt-auto">
+                  <span
+                    className={`text-[11px] sm:text-xs font-semibold leading-tight line-clamp-2 text-center break-words px-1 transition-colors ${
+                      isSelected
+                        ? "text-[#681a72] dark:text-[#c084fc] font-bold"
+                        : "text-gray-800 dark:text-gray-100 group-hover:text-[#681a72] dark:group-hover:text-[#c084fc]"
+                    }`}
+                  >
+                    {cat.name}
+                  </span>
+                </div>
               </button>
             );
           })}
@@ -705,6 +804,36 @@ export default function MeeshoHomeClient() {
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* MEESHO-STYLE LIVE ORDER NOTIFICATION TOAST (Desktop Social Proof) */}
+      {showLiveOrderToast && (
+        <div className="hidden lg:flex fixed bottom-6 left-6 z-40 bg-white/95 dark:bg-[#151c2c]/95 backdrop-blur-md border border-gray-200/90 dark:border-gray-800 p-3 rounded-2xl shadow-xl items-center gap-3 animate-in fade-in slide-in-from-bottom-2 max-w-sm">
+          <div className="w-9 h-9 rounded-full bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 flex items-center justify-center shrink-0">
+            <ShoppingBag className="w-4 h-4" />
+          </div>
+          <div className="min-w-0 pr-2">
+            <p className="text-[11px] text-gray-500 dark:text-gray-400">
+              <span className="font-bold text-gray-900 dark:text-white">
+                {recentOrdersList[recentOrderIndex].name}
+              </span>{" "}
+              from {recentOrdersList[recentOrderIndex].city} just bought:
+            </p>
+            <p className="text-xs font-bold text-[#681a72] dark:text-[#c084fc] truncate">
+              {recentOrdersList[recentOrderIndex].item}
+            </p>
+            <span className="text-[9px] text-gray-400">
+              Verified Wholesale Order • {recentOrdersList[recentOrderIndex].time}
+            </span>
+          </div>
+          <button
+            onClick={() => setShowLiveOrderToast(false)}
+            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-1 rounded-md"
+            aria-label="Close notification"
+          >
+            <X className="w-3.5 h-3.5" />
+          </button>
         </div>
       )}
     </div>

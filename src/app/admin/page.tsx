@@ -20,11 +20,22 @@ import {
   Eye,
   AlertCircle,
   X,
+  Lock,
+  LogOut,
+  ShoppingBag,
 } from "lucide-react";
 import { PRODUCTS as INITIAL_PRODUCTS, CATEGORIES, Product } from "@/data/products";
 import { formatPrice } from "@/lib/utils";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function SupplierAdminPage() {
+  const user = useAuthStore((s) => s.user);
+  const loginAsAdmin = useAuthStore((s) => s.loginAsAdmin);
+  const logout = useAuthStore((s) => s.logout);
+  const [adminEmailInput, setAdminEmailInput] = useState("admin@velora.com");
+  const [adminPasswordInput, setAdminPasswordInput] = useState("admin");
+  const [authError, setAuthError] = useState<string | null>(null);
+
   const [productsList, setProductsList] = useState<Product[]>(INITIAL_PRODUCTS);
   const [activeTab, setActiveTab] = useState<"overview" | "catalog" | "orders">("catalog");
   const [newModalOpen, setNewModalOpen] = useState(false);
@@ -50,6 +61,8 @@ export default function SupplierAdminPage() {
   const [newImage, setNewImage] = useState(
     "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=800&q=80"
   );
+  const [newImage2, setNewImage2] = useState("");
+  const [newImage3, setNewImage3] = useState("");
   const [newDescription, setNewDescription] = useState(
     "Premium quality Jacquard woven soft silk saree direct from Surat wholesale mills. Colorfast fabric with matching unstitched blouse piece."
   );
@@ -147,6 +160,8 @@ export default function SupplierAdminPage() {
     setLoading(true);
     setSuccessMsg(null);
 
+    const allImages = [newImage, newImage2, newImage3].filter(Boolean);
+
     const payload = {
       title: newTitle,
       category: newCategory,
@@ -155,7 +170,7 @@ export default function SupplierAdminPage() {
       price: Number(newPrice),
       originalPrice: Number(newOriginalPrice),
       stockCount: Number(newStock),
-      images: [newImage],
+      images: allImages.length > 0 ? allImages : [newImage],
       description: newDescription,
       badge: "New Arrival",
     };
@@ -201,6 +216,107 @@ export default function SupplierAdminPage() {
       setProductsList(productsList.filter((p) => p.id !== id));
     }
   };
+
+  if (!user || (user.role !== "admin" && user.role !== "supplier")) {
+    return (
+      <div className="min-h-[80vh] flex items-center justify-center px-4 py-12 bg-[#f8f9fa] dark:bg-[#0b0f19]">
+        <div className="w-full max-w-md bg-white dark:bg-[#131926] rounded-3xl border border-gray-200 dark:border-gray-800 shadow-2xl p-6 sm:p-8 text-center space-y-6">
+          <div className="w-16 h-16 rounded-2xl bg-purple-50 dark:bg-purple-950/40 text-[#681a72] dark:text-[#c084fc] flex items-center justify-center mx-auto shadow-sm">
+            <Lock className="w-8 h-8" />
+          </div>
+
+          <div>
+            <h1 className="text-2xl font-black text-gray-900 dark:text-white tracking-tight">
+              Velora Admin Hub
+            </h1>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+              Authorized personnel & verified merchant access only
+            </p>
+          </div>
+
+          {authError && (
+            <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 text-xs">
+              {authError}
+            </div>
+          )}
+
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (adminEmailInput && adminPasswordInput) {
+                loginAsAdmin();
+              } else {
+                setAuthError("Please enter email & password");
+              }
+            }}
+            className="space-y-4 text-left"
+          >
+            <div>
+              <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">
+                Admin Email
+              </label>
+              <input
+                type="email"
+                required
+                value={adminEmailInput}
+                onChange={(e) => setAdminEmailInput(e.target.value)}
+                placeholder="admin@velora.com"
+                className="w-full bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-2.5 text-xs text-gray-900 dark:text-white focus:outline-none focus:border-gray-900"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">
+                Password
+              </label>
+              <input
+                type="password"
+                required
+                value={adminPasswordInput}
+                onChange={(e) => setAdminPasswordInput(e.target.value)}
+                placeholder="admin"
+                className="w-full bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-2.5 text-xs text-gray-900 dark:text-white focus:outline-none focus:border-gray-900"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-3 bg-gray-950 hover:bg-black text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-md transition-all active:scale-95 cursor-pointer"
+            >
+              Log In to Admin
+            </button>
+          </form>
+
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-200 dark:border-gray-800" />
+            </div>
+            <div className="relative flex justify-center text-[10px] uppercase font-bold text-gray-400">
+              <span className="bg-white dark:bg-[#131926] px-2">Instant Demo Access</span>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => loginAsAdmin()}
+            className="w-full py-3 bg-purple-50 hover:bg-purple-100 dark:bg-purple-950/40 text-[#681a72] dark:text-purple-300 font-extrabold text-xs uppercase tracking-wider rounded-xl border border-purple-200 dark:border-purple-800 transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+          >
+            <ShieldCheck className="w-4 h-4 text-amber-500" />
+            <span>⚡ 1-Click Demo Admin Login</span>
+          </button>
+
+          <div className="pt-2">
+            <Link
+              href="/"
+              className="text-xs text-gray-500 hover:text-black dark:hover:text-white font-semibold"
+            >
+              ← Back to Shopping Store
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] dark:bg-[#0b0f19] pt-6 pb-20 px-4 sm:px-6 transition-colors">
@@ -255,10 +371,10 @@ export default function SupplierAdminPage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
             <Link
               href="/shop"
-              className="px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 text-gray-700 dark:text-gray-300 text-xs font-bold rounded-xl flex items-center gap-1.5 transition-colors"
+              className="px-3.5 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 text-gray-700 dark:text-gray-300 text-xs font-bold rounded-xl flex items-center gap-1.5 transition-colors"
             >
               <Eye className="w-3.5 h-3.5" />
               <span>Preview Store</span>
@@ -266,10 +382,19 @@ export default function SupplierAdminPage() {
 
             <button
               onClick={() => setNewModalOpen(true)}
-              className="px-4 py-2 bg-[#681a72] hover:bg-[#56135e] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-md transition-all active:scale-95 cursor-pointer"
+              className="px-4 py-2 bg-gradient-to-r from-[#681a72] to-[#e11d48] hover:opacity-90 text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-md transition-all active:scale-95 cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               <span>Add New Product</span>
+            </button>
+
+            <button
+              onClick={() => logout()}
+              className="px-3 py-2 bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 text-xs font-bold rounded-xl flex items-center gap-1 transition-colors cursor-pointer border border-rose-200 dark:border-rose-800"
+              title="Logout from Admin"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span>Logout</span>
             </button>
           </div>
         </div>
@@ -625,26 +750,58 @@ export default function SupplierAdminPage() {
                 </div>
               </div>
 
-              {/* Image URL & Live Preview */}
-              <div>
-                <label className="text-xs font-bold text-gray-700 dark:text-gray-300 block mb-1">
-                  Product Image URL *
-                </label>
-                <div className="flex gap-3 items-center">
+              {/* Multi-Angle Image URLs & Live Preview */}
+              <div className="space-y-2">
+                <div>
+                  <label className="text-xs font-bold text-gray-700 dark:text-gray-300 block mb-1">
+                    Primary Cover Photo URL * (Main Angle)
+                  </label>
                   <input
                     type="url"
                     required
-                    placeholder="https://images.unsplash.com/..."
+                    placeholder="https://images.unsplash.com/... (Cover Shot)"
                     value={newImage}
                     onChange={(e) => setNewImage(e.target.value)}
-                    className="flex-1 text-xs p-2.5 border border-gray-300 dark:border-gray-700 rounded-xl bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white outline-none focus:border-[#681a72]"
+                    className="w-full text-xs p-2.5 border border-gray-300 dark:border-gray-700 rounded-xl bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white outline-none focus:border-[#681a72]"
                   />
+                </div>
 
-                  {newImage && (
-                    <div className="relative w-11 h-14 rounded-lg overflow-hidden border border-gray-300 shrink-0">
-                      <Image src={newImage} alt="Preview" fill className="object-cover" />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div>
+                    <label className="text-[11px] font-semibold text-gray-600 dark:text-gray-400 block mb-1">
+                      Angle 2 Photo URL (Side / Model View)
+                    </label>
+                    <input
+                      type="url"
+                      placeholder="Optional 2nd angle URL"
+                      value={newImage2}
+                      onChange={(e) => setNewImage2(e.target.value)}
+                      className="w-full text-xs p-2 border border-gray-300 dark:border-gray-700 rounded-xl bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white outline-none focus:border-[#681a72]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="text-[11px] font-semibold text-gray-600 dark:text-gray-400 block mb-1">
+                      Angle 3 Photo URL (Fabric / Detail Close-up)
+                    </label>
+                    <input
+                      type="url"
+                      placeholder="Optional 3rd angle URL"
+                      value={newImage3}
+                      onChange={(e) => setNewImage3(e.target.value)}
+                      className="w-full text-xs p-2 border border-gray-300 dark:border-gray-700 rounded-xl bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white outline-none focus:border-[#681a72]"
+                    />
+                  </div>
+                </div>
+
+                {/* Live Multi-Thumbnails Preview */}
+                <div className="flex items-center gap-2 pt-1">
+                  <span className="text-[10px] text-gray-400 font-medium">Preview Angles:</span>
+                  {[newImage, newImage2, newImage3].filter(Boolean).map((imgUrl, i) => (
+                    <div key={i} className="relative w-10 h-12 rounded-lg overflow-hidden border border-gray-300 dark:border-gray-700 shrink-0 shadow-xs">
+                      <Image src={imgUrl} alt={`Angle ${i + 1}`} fill className="object-cover" />
                     </div>
-                  )}
+                  ))}
                 </div>
               </div>
 
