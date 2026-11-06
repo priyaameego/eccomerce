@@ -20,6 +20,134 @@ import { PRODUCTS, CATEGORIES, Product } from "@/data/products";
 import ProductCard from "@/components/ui/ProductCard";
 import { formatPrice } from "@/lib/utils";
 
+// Strict & Accurate Subcategory Matching Engine (Prevents cross-category bleeds like shirts under t-shirts or jeans matching tops)
+function matchProductSubcategory(p: Product, targetSubcategory: string): boolean {
+  if (!targetSubcategory || targetSubcategory.toLowerCase().startsWith("all")) return true;
+
+  const target = targetSubcategory.toLowerCase().trim();
+  const pSub = p.subcategory.toLowerCase().trim();
+  const pTitle = p.title.toLowerCase().trim();
+
+  // 1. Precise Shirt vs T-shirt isolation (prevents shirts from pulling in t-shirts or vice-versa)
+  const isTshirtTarget = target.includes("t-shirt") || target.includes("tshirt") || target === "t-shirts";
+  const isShirtTarget =
+    !isTshirtTarget &&
+    (target === "shirts" || target === "shirt" || target.includes("casual shirt") || target.includes("checked shirt") || target.includes("collar shirt"));
+
+  const isTshirtProduct = pSub.includes("t-shirt") || pSub.includes("tshirt") || pTitle.includes("t-shirt") || pTitle.includes("tshirt");
+  const isShirtProduct = !isTshirtProduct && (pSub === "shirts" || pSub === "shirt" || pTitle.includes("shirt"));
+
+  if (isShirtTarget) return isShirtProduct;
+  if (isTshirtTarget) return isTshirtProduct;
+
+  // 2. Direct exact subcategory match
+  if (pSub === target) return true;
+
+  // 3. Saree variants
+  if (target === "sarees" || target === "all sarees") {
+    return pSub.includes("saree") || pTitle.includes("saree");
+  }
+  if (target.includes("silk saree") || target.includes("banarasi")) {
+    return (pSub.includes("saree") || pTitle.includes("saree")) && (pTitle.includes("silk") || pSub.includes("silk") || pTitle.includes("banarasi"));
+  }
+  if (target.includes("cotton saree") || target.includes("chanderi") || target.includes("jaipur")) {
+    return (pSub.includes("saree") || pTitle.includes("saree")) && (pTitle.includes("cotton") || pTitle.includes("chanderi") || pTitle.includes("jaipur"));
+  }
+
+  // 4. Kurti / Kurta Sets
+  if (target.includes("kurta set")) {
+    return pSub.includes("kurta set") || pTitle.includes("kurta & pant") || pTitle.includes("kurta set");
+  }
+  if (target.includes("kurti") || target.includes("anarkali")) {
+    return (pSub.includes("kurti") || pTitle.includes("kurti") || pTitle.includes("anarkali")) && !pSub.includes("kurta set");
+  }
+
+  // 5. Lehenga
+  if (target.includes("lehenga")) {
+    return pSub.includes("lehenga") || pTitle.includes("lehenga");
+  }
+
+  // 6. Tops vs Dresses vs Jeans
+  if (target === "tops" || target.includes("top") || target.includes("peplum")) {
+    return pSub === "tops" || (pTitle.includes("top") && !pSub.includes("dress"));
+  }
+  if (target === "dresses" || target === "dress" || target.includes("midi dress") || target.includes("maxi dress") || target.includes("bodycon")) {
+    return pSub === "dresses" || pTitle.includes("dress");
+  }
+  if (target === "jeans" || target.includes("denim jeans") || target.includes("straight fit")) {
+    return pSub === "jeans" || (pTitle.includes("jeans") && !pTitle.includes("shirt"));
+  }
+
+  // 7. Trousers / Chinos
+  if (target.includes("trouser") || target.includes("chino")) {
+    return pSub.includes("trouser") || pTitle.includes("trouser") || pTitle.includes("chino");
+  }
+
+  // 8. Men Ethnic
+  if (target.includes("ethnic wear") || target.includes("kurta")) {
+    return pSub.includes("ethnic wear") || pTitle.includes("kurta");
+  }
+
+  // 9. Footwear distinctions
+  if (target.includes("kolhapuri") || target.includes("ethnic footwear")) {
+    return pSub.includes("ethnic footwear") || pTitle.includes("kolhapuri");
+  }
+  if (target.includes("loafer")) {
+    return pTitle.includes("loafer");
+  }
+  if (target.includes("running") || target.includes("sneaker")) {
+    return pTitle.includes("running") || pTitle.includes("sneaker");
+  }
+  if (target === "men footwear" || target === "men's footwear" || target.includes("shoes")) {
+    return pSub.includes("footwear") && !pSub.includes("women");
+  }
+  if (target.includes("handbag") || target.includes("sling")) {
+    return pSub.includes("handbag") || pTitle.includes("handbag") || pTitle.includes("sling");
+  }
+
+  // 10. Kids
+  if (target.includes("girls")) return pSub.includes("girls") || pTitle.includes("girls") || pTitle.includes("frock");
+  if (target.includes("boys")) return pSub.includes("boys") || pTitle.includes("boys");
+  if (target.includes("baby") || target.includes("romper") || target.includes("infant")) {
+    return pSub.includes("baby") || pTitle.includes("romper") || pTitle.includes("baby");
+  }
+  if (target.includes("toy")) return pSub.includes("toy") || pTitle.includes("toy");
+  if (target.includes("school") || target.includes("backpack")) {
+    return pSub.includes("school") || pTitle.includes("school") || pSub.includes("backpack") || pTitle.includes("backpack");
+  }
+
+  // 11. Home & Kitchen
+  if (target.includes("bedsheet")) return pSub.includes("bedsheet") || pTitle.includes("bedsheet");
+  if (target.includes("curtain")) return pSub.includes("curtain") || pTitle.includes("curtain");
+  if (target.includes("cookware") || target.includes("kadai") || target.includes("pan")) return pSub.includes("cookware") || pTitle.includes("cookware");
+  if (target.includes("chopper") || target.includes("kitchen tool")) return pSub.includes("kitchen") || pTitle.includes("chopper");
+  if (target.includes("diffuser") || target.includes("decor") || target.includes("lamp")) return pSub.includes("decor") || pTitle.includes("diffuser");
+
+  // 12. Beauty
+  if (target.includes("lipstick") || target === "makeup") return pSub === "makeup" || pTitle.includes("lipstick");
+  if (target.includes("brush") || target.includes("makeup tool")) return pSub.includes("tool") || pTitle.includes("brush");
+  if (target.includes("skincare") || target.includes("serum") || target.includes("aloe") || target.includes("face wash")) {
+    return pSub === "skincare";
+  }
+
+  // 13. Jewellery
+  if (target.includes("jewellery set") || target.includes("necklace") || target.includes("choker")) return pSub.includes("jewellery set") || pTitle.includes("choker");
+  if (target.includes("earring") || target.includes("jhumk")) return pSub.includes("earring") || pTitle.includes("jhumk");
+  if (target.includes("wallet")) return pSub.includes("wallet") || pTitle.includes("wallet");
+  if (target.includes("sunglass")) return pSub.includes("sunglass") || pTitle.includes("sunglass");
+  if (target.includes("bracelet") || target.includes("bangle")) return pSub.includes("bracelet") || pTitle.includes("bracelet") || pTitle.includes("bangle");
+
+  // 14. Electronics
+  if (target.includes("audio") || target.includes("headphone") || target.includes("earbud")) return pSub.includes("audio") || pTitle.includes("earbud");
+  if (target.includes("smartwatch") || target.includes("watch")) return pSub.includes("smartwatch") || pTitle.includes("watch");
+  if (target.includes("charger") || target.includes("mobile accessories")) return pSub.includes("mobile accessories") || pTitle.includes("charger");
+  if (target.includes("speaker")) return pSub.includes("speaker") || pTitle.includes("speaker");
+  if (target.includes("gadget") || target.includes("desk lamp")) return pSub.includes("gadget") || pTitle.includes("desk lamp");
+
+  // Strict direct match on subcategory or title (never descriptions)
+  return pSub.includes(target) || pTitle.includes(target);
+}
+
 function ShopContent() {
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category") || "all";
@@ -84,36 +212,9 @@ function ShopContent() {
           return false;
         }
 
-        // Subcategory filter with resilient token & compound matching
-        if (selectedSubcategory && !selectedSubcategory.toLowerCase().startsWith("all")) {
-          const target = selectedSubcategory.toLowerCase().trim();
-          const pSub = p.subcategory.toLowerCase();
-          const pTitle = p.title.toLowerCase();
-          const pDesc = (p.description || "").toLowerCase();
-
-          // 1. Direct match
-          const directMatch = pSub.includes(target) || pTitle.includes(target);
-
-          // 2. Inverse match (e.g., target="Sarees", pSub="Silk Sarees")
-          const inverseMatch = target.includes(pSub);
-
-          // 3. Multi-token match (e.g., "Silk Sarees" -> checks "silk" & "saree")
-          const tokens = target.replace(/s\b/g, "").split(/\s+/).filter(Boolean);
-          const tokenMatch =
-            tokens.length > 0 &&
-            tokens.every(
-              (tok) =>
-                pSub.includes(tok) ||
-                pTitle.includes(tok) ||
-                pDesc.includes(tok)
-            );
-
-          // 4. Any token match for broad subcategories
-          const anyWordMatch = tokens.some((tok) => tok.length > 3 && (pSub.includes(tok) || pTitle.includes(tok)));
-
-          if (!directMatch && !inverseMatch && !tokenMatch && !anyWordMatch) {
-            return false;
-          }
+        // Subcategory filter with 100% accurate matching (No cross-category bleeding)
+        if (selectedSubcategory && !matchProductSubcategory(p, selectedSubcategory)) {
+          return false;
         }
 
         // Deal query

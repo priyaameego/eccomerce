@@ -47,6 +47,14 @@ export default function RootLayout({
       lang="en"
       className={`${sansFont.variable} light antialiased scroll-smooth`}
     >
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Michroma&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className="min-h-screen bg-[#f8f9fa] text-[#1e293b] flex flex-col font-sans selection:bg-[#681a72] selection:text-white pb-14 sm:pb-0">
         <ThemeProvider>
           {/* Velora Global Header */}

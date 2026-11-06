@@ -16,12 +16,18 @@
   }
 }
 
+html,
+body {
+  overflow-x: clip;
+  max-width: 100vw;
+  -webkit-font-smoothing: antialiased;
+  -webkit-overflow-scrolling: touch;
+}
+
 body {
   background-color: #f8f9fa;
   color: #1e293b;
   font-family: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  transition: background-color 0.2s ease, color 0.2s ease;
-  overflow-x: hidden;
 }
 
 /* Custom Scrollbar */
@@ -345,4 +351,562 @@ html.dark .velora-card:hover,
 html.dark .card-3d-hover:hover {
   border-color: #c084fc !important;
   box-shadow: 0 18px 40px -10px rgba(192, 132, 252, 0.25) !important;
+}
+
+
+/* =========================================================================
+   MAISON VELL RUNWAY 3D DEPTH LOOKBOOK STYLES (Tailored Responsive E-commerce)
+   ========================================================================= */
+.maison-vell-root {
+  --u: min(calc(100vw / 1600), calc(100vh / 900));
+  --ink: #16191f;
+  --mid: #737b86;
+  --dim: #a4adb8;
+  --line: #e6ebf0;
+  --ice: #e9f0f7;
+  font-family: var(--font-sans), Inter, system-ui, sans-serif;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+.maison-vell-root .wide {
+  font-family: Michroma, sans-serif;
+  text-transform: uppercase;
+}
+
+.maison-vell-root header {
+  padding: calc(18 * var(--u)) calc(46 * var(--u)) calc(14 * var(--u));
+}
+
+.maison-vell-root .r1 {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+
+.maison-vell-root .brand {
+  font-size: calc(15.5 * var(--u));
+  letter-spacing: 0.2em;
+}
+
+.maison-vell-root .tabs {
+  display: flex;
+  gap: calc(48 * var(--u));
+  font-size: calc(14.5 * var(--u));
+  letter-spacing: 0.14em;
+  color: var(--dim);
+}
+
+.maison-vell-root .tabs a {
+  transition: color 0.25s;
+}
+
+.maison-vell-root .tabs a:hover,
+.maison-vell-root .tabs .on {
+  color: var(--ink);
+}
+
+.maison-vell-root .acct {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: calc(22 * var(--u));
+  font-size: calc(9.5 * var(--u));
+  letter-spacing: 0.12em;
+}
+
+.maison-vell-root .acct svg {
+  width: calc(17 * var(--u));
+  height: calc(17 * var(--u));
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+
+.maison-vell-root .r2 {
+  display: flex;
+  justify-content: center;
+  gap: calc(60 * var(--u));
+  margin-top: calc(17 * var(--u));
+  font-size: calc(9.5 * var(--u));
+  letter-spacing: 0.14em;
+}
+
+.maison-vell-root .r2 a {
+  transition: color 0.2s;
+}
+.maison-vell-root .r2 a:hover {
+  color: var(--mid);
+}
+
+.maison-vell-root .main {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr minmax(280px, calc(360 * var(--u)));
+  min-height: 0;
+  height: 100%;
+}
+
+.maison-vell-root .stage {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: none;
+  background: linear-gradient(transparent 60%, rgba(255, 255, 255, 0.72) 100%),
+    linear-gradient(90deg, #f1f5fa 0%, #e7eff6 38%, #eef4f9 62%, #f6f9fc 100%);
+}
+
+.maison-vell-root .line {
+  position: absolute;
+  inset: 0;
+}
+
+.maison-vell-root .m {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  will-change: transform, filter;
+  cursor: none;
+}
+
+.maison-vell-root .m svg {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.maison-vell-root .m:before {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: -1.6%;
+  height: 3.6%;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgba(70, 85, 105, 0.28),
+    transparent
+  );
+}
+
+/* Headroom-protected Intro Text: NEVER cut off under top navbar */
+.maison-vell-root .intro {
+  position: absolute;
+  z-index: 10;
+  left: clamp(24px, calc(46 * var(--u)), 54px);
+  top: clamp(56px, calc(72 * var(--u)), 84px);
+  max-width: clamp(280px, calc(380 * var(--u)), 420px);
+  pointer-events: none;
+}
+
+.maison-vell-root .intro h2 {
+  font-weight: 600;
+  font-size: clamp(16px, calc(21 * var(--u)), 24px);
+  line-height: 1.25;
+  letter-spacing: 0.16em;
+  white-space: nowrap;
+  color: #111827;
+}
+
+.maison-vell-root .intro p {
+  margin-top: clamp(8px, calc(12 * var(--u)), 16px);
+  font-size: clamp(12px, calc(13.5 * var(--u)), 14px);
+  line-height: 1.6;
+  letter-spacing: 0.015em;
+  color: var(--mid);
+}
+
+/* Bottom Look Indicator Plaque */
+.maison-vell-root .tag {
+  position: absolute;
+  z-index: 10;
+  left: clamp(24px, calc(46 * var(--u)), 54px);
+  bottom: clamp(24px, calc(36 * var(--u)), 42px);
+}
+
+.maison-vell-root .look {
+  display: flex;
+  font-size: clamp(22px, calc(28 * var(--u)), 30px);
+  line-height: clamp(32px, calc(38 * var(--u)), 40px);
+  letter-spacing: 0.14em;
+  gap: 0.5em;
+  pointer-events: none;
+  color: #111827;
+}
+
+.maison-vell-root .win {
+  height: clamp(32px, calc(38 * var(--u)), 40px);
+  overflow: hidden;
+}
+
+.maison-vell-root .roll {
+  display: block;
+  will-change: transform;
+}
+
+.maison-vell-root .roll b {
+  display: block;
+  font-weight: 400;
+  height: clamp(32px, calc(38 * var(--u)), 40px);
+}
+
+.maison-vell-root .shop {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: calc(10 * var(--u));
+  font-size: clamp(10.5px, calc(11.5 * var(--u)), 12.5px);
+  letter-spacing: 0.14em;
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(22, 25, 31, 0.25);
+  border-radius: 9999px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  color: #111827;
+}
+
+.maison-vell-root .shop:hover {
+  background: #111827;
+  color: #ffffff;
+  border-color: #111827;
+  transform: translateX(4px);
+}
+
+.maison-vell-root .ring {
+  position: absolute;
+  z-index: 4;
+  left: 0;
+  top: 0;
+  width: calc(46 * var(--u));
+  height: calc(46 * var(--u));
+  margin: calc(-23 * var(--u)) 0 0 calc(-23 * var(--u));
+  border: calc(2.5 * var(--u)) solid #16191f;
+  border-radius: 99px;
+  pointer-events: none;
+  opacity: 0;
+  transition: width 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
+    height 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
+    margin 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.2s;
+}
+
+.maison-vell-root .ring.show {
+  opacity: 1;
+}
+
+.maison-vell-root .ring.drag {
+  width: calc(84 * var(--u));
+  height: calc(34 * var(--u));
+  margin: calc(-17 * var(--u)) 0 0 calc(-42 * var(--u));
+}
+
+.maison-vell-root .rail {
+  position: relative;
+  overflow: hidden;
+  background: #f8fafc;
+  border-left: 1px solid rgba(226, 232, 240, 0.9);
+  min-height: 0;
+  height: 100%;
+}
+
+/* Luxury E-commerce Product Card in Rail */
+.maison-vell-root .card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 18px 14px;
+  will-change: transform;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(241, 245, 249, 1);
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.maison-vell-root .card.alt {
+  background: #fafbfc;
+}
+
+.maison-vell-root .card:hover {
+  background: #ffffff;
+  box-shadow: inset 0 0 0 1.5px rgba(104, 26, 114, 0.18), 0 8px 16px -4px rgba(0, 0, 0, 0.06);
+}
+
+.maison-vell-root .fav {
+  position: absolute;
+  left: 16px;
+  top: 12px;
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  color: #374151;
+  border: 1px solid rgba(229, 231, 235, 0.85);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.maison-vell-root .fav:hover {
+  transform: scale(1.12);
+  color: #e11d48;
+}
+
+.maison-vell-root .fav svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  transition: fill 0.2s, stroke 0.2s;
+}
+
+.maison-vell-root .fav[aria-pressed="true"] svg {
+  fill: #e11d48;
+  stroke: #e11d48;
+}
+
+.maison-vell-root .shot {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.maison-vell-root .card:hover .shot {
+  transform: scale(1.05);
+}
+
+.maison-vell-root .shot svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.maison-vell-root .meta {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  margin-top: 6px;
+  gap: 8px;
+}
+
+/* Crisp, Never-Distorted Product Title */
+.maison-vell-root .piece-title {
+  grid-column: 1;
+  font-family: var(--font-sans), Inter, system-ui, sans-serif !important;
+  font-weight: 700;
+  font-size: clamp(11.5px, calc(13 * var(--u)), 13px);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #111827;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 175px;
+}
+
+.maison-vell-root .piece-price {
+  display: block;
+  grid-column: 1;
+  margin-top: 2px;
+  font-family: var(--font-sans), Inter, system-ui, sans-serif !important;
+  font-size: clamp(13px, calc(14.5 * var(--u)), 15.5px);
+  font-weight: 800;
+  color: #681a72;
+  letter-spacing: 0.01em;
+}
+
+/* Luxury Responsive Add to Cart Button ("ye jo add ka hai") */
+.maison-vell-root .add-btn {
+  grid-column: 2;
+  grid-row: 1/3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 7px 13px;
+  border-radius: 9999px;
+  background: #111827;
+  color: #ffffff;
+  font-family: var(--font-sans), Inter, system-ui, sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.maison-vell-root .add-btn svg {
+  width: 13px;
+  height: 13px;
+  transition: transform 0.2s ease;
+}
+
+.maison-vell-root .add-btn:hover {
+  background: #681a72;
+  border-color: #681a72;
+  transform: translateY(-1px) scale(1.04);
+  box-shadow: 0 6px 16px rgba(104, 26, 114, 0.32);
+}
+
+.maison-vell-root .add-btn:hover svg {
+  transform: scale(1.15);
+}
+
+.maison-vell-root .add-btn:active {
+  transform: scale(0.96);
+}
+
+.maison-vell-root .add-btn.added {
+  background: #059669 !important;
+  border-color: #059669 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35) !important;
+}
+
+.maison-vell-root .wait {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  background: #f1f5fa;
+  transition: opacity 0.5s;
+  pointer-events: none;
+}
+
+.maison-vell-root .wait.gone {
+  opacity: 0;
+}
+
+/* Mobile & Tablet Responsive Rules (<= 820px) */
+@media (max-width: 820px) {
+  .maison-vell-root {
+    --u: 1px !important;
+  }
+
+  .maison-vell-root header {
+    padding: 14px 16px 12px;
+  }
+
+  .maison-vell-root .r1 {
+    grid-template-columns: 1fr auto;
+  }
+
+  .maison-vell-root .tabs,
+  .maison-vell-root .r2,
+  .maison-vell-root .acct > a:not(:last-child) {
+    display: none;
+  }
+
+  .maison-vell-root .brand {
+    font-size: 14px;
+  }
+
+  .maison-vell-root .main {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 180px;
+  }
+
+  .maison-vell-root .rail {
+    border-left: none;
+    border-top: 1px solid rgba(226, 232, 240, 0.9);
+  }
+
+  .maison-vell-root .stage {
+    cursor: auto;
+  }
+
+  .maison-vell-root .m {
+    cursor: auto;
+  }
+
+  .maison-vell-root .ring {
+    display: none;
+  }
+
+  .maison-vell-root .intro {
+    left: 18px;
+    top: 24px;
+    width: calc(100% - 36px);
+  }
+
+  .maison-vell-root .intro h2 {
+    font-size: 16px;
+  }
+
+  .maison-vell-root .intro p {
+    display: none;
+  }
+
+  .maison-vell-root .tag {
+    left: 18px;
+    bottom: 16px;
+  }
+
+  .maison-vell-root .look {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .maison-vell-root .win,
+  .maison-vell-root .roll b {
+    height: 28px;
+  }
+
+  .maison-vell-root .card {
+    width: 165px;
+    height: 100%;
+    padding: 10px 12px 12px;
+    border-bottom: none;
+    border-right: 1px solid rgba(241, 245, 249, 1);
+  }
+
+  .maison-vell-root .piece-title {
+    max-width: 90px;
+    font-size: 10.5px;
+  }
+
+  .maison-vell-root .piece-price {
+    font-size: 12px;
+  }
+
+  .maison-vell-root .add-btn {
+    padding: 5px 9px;
+    font-size: 10px;
+    gap: 3px;
+  }
+
+  .maison-vell-root .add-btn svg {
+    width: 11px;
+    height: 11px;
+  }
+
+  .maison-vell-root .fav {
+    left: 8px;
+    top: 8px;
+    width: 26px;
+    height: 26px;
+  }
 }

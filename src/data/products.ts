@@ -83,9 +83,7 @@ export const CATEGORIES = [
       "Cotton Sarees",
       "Kurtis",
       "Kurta Sets",
-      "Suits & Dress Material",
       "Lehengas",
-      "Ethnic Bottomwear",
     ],
   },
   {
@@ -96,12 +94,7 @@ export const CATEGORIES = [
     subcategories: [
       "Tops",
       "Dresses",
-      "T-shirts",
       "Jeans",
-      "Jumpsuits",
-      "Skirts",
-      "Shorts",
-      "Shrugs & Jackets",
     ],
   },
   {
@@ -113,10 +106,7 @@ export const CATEGORIES = [
       "Shirts",
       "T-shirts",
       "Trousers",
-      "Jeans",
       "Ethnic Wear",
-      "Jackets",
-      "Activewear",
     ],
   },
   {
@@ -127,10 +117,9 @@ export const CATEGORIES = [
     subcategories: [
       "Boys Wear",
       "Girls Wear",
-      "Infant 0-2 Years",
-      "Toys & Puzzles",
-      "Baby Care",
-      "Kids Footwear",
+      "Baby Wear",
+      "Toys",
+      "School Supplies",
     ],
   },
   {
@@ -141,10 +130,9 @@ export const CATEGORIES = [
     subcategories: [
       "Bedsheets",
       "Curtains",
-      "Kitchen Tools",
       "Cookware",
+      "Kitchen Tools",
       "Home Decor",
-      "Storage & Organizers",
     ],
   },
   {
@@ -155,10 +143,7 @@ export const CATEGORIES = [
     subcategories: [
       "Makeup",
       "Skincare",
-      "Haircare",
-      "Fragrances",
-      "Oral Care",
-      "Wellness",
+      "Makeup Tools",
     ],
   },
   {
@@ -169,10 +154,9 @@ export const CATEGORIES = [
     subcategories: [
       "Jewellery Sets",
       "Earrings",
-      "Mangalsutras",
-      "Bangles & Bracelets",
-      "Watches",
+      "Wallets",
       "Sunglasses",
+      "Bracelets",
     ],
   },
   {
@@ -181,12 +165,10 @@ export const CATEGORIES = [
     slug: "bags-footwear",
     image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=600&q=80",
     subcategories: [
-      "Women Flats & Heels",
       "Men Footwear",
-      "Casual Shoes",
+      "Ethnic Footwear",
       "Women Handbags",
       "Backpacks",
-      "Wallets",
     ],
   },
   {
@@ -198,8 +180,8 @@ export const CATEGORIES = [
       "Audio & Headphones",
       "Smartwatches",
       "Mobile Accessories",
-      "Chargers & Cables",
-      "Home Appliances",
+      "Speakers",
+      "Gadgets",
     ],
   },
 
@@ -2038,7 +2020,7 @@ export const PRODUCTS: Product[] = [
     title: "240 GSM Pure Combed Cotton Oversized Anime Print Streetwear T-Shirt",
     subtitle: "Heavy French Terry Drop Shoulder Streetwear Fit with HD High-Density Print",
     category: "Men",
-    subcategory: "T-Shirts",
+    subcategory: "T-shirts",
     brand: "DopeThreads Co",
     price: 279,
     originalPrice: 899,
@@ -2937,7 +2919,7 @@ export const PRODUCTS: Product[] = [
     title: "Cushioned Comfort Insole Faux Suede Slip-On Party & Wedding Tassel Loafers",
     subtitle: "TPR Flexible Non-Slip Driving Sole with Hand-Finished Tassel Details",
     category: "Bags & Footwear",
-    subcategory: "Men's Footwear",
+    subcategory: "Men Footwear",
     brand: "Agra Shoe Works",
     price: 449,
     originalPrice: 1499,

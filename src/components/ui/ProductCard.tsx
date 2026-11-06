@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -26,10 +26,24 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const [isAddedRecently, setIsAddedRecently] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [canHover, setCanHover] = useState(false);
   const [activeImgIdx, setActiveImgIdx] = useState(0);
   const [selectedColor, setSelectedColor] = useState<string | undefined>(
     product.colors?.[0]?.name
   );
+
+  useEffect(() => {
+    // Only enable 3D tilt & magnetic transforms on fine pointer mouse devices (prevents mobile touch scroll jitter)
+    if (typeof window !== "undefined") {
+      const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+      setCanHover(mq.matches && window.innerWidth >= 1024);
+      const listener = (e: MediaQueryListEvent) => {
+        setCanHover(e.matches && window.innerWidth >= 1024);
+      };
+      mq.addEventListener("change", listener);
+      return () => mq.removeEventListener("change", listener);
+    }
+  }, []);
 
   const [transformStyle, setTransformStyle] = useState({
     rotateX: 0,
@@ -83,9 +97,9 @@ export default function ProductCard({ product }: ProductCardProps) {
     setActiveImgIdx((prev) => (prev - 1 + productImages.length) % productImages.length);
   };
 
-  // 3D Tilt & Magnetic Physics
+  // 3D Tilt & Magnetic Physics (Only on fine mouse pointer)
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
+    if (!canHover || !cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
@@ -103,9 +117,10 @@ export default function ProductCard({ product }: ProductCardProps) {
       glareY: (y / height) * 100,
       glareOpacity: 0.25,
     });
-  }, []);
+  }, [canHover]);
 
   const handleMouseEnter = () => {
+    if (!canHover) return;
     setIsHovered(true);
     // On hover, if there's a second image, hint with second photo
     if (productImages.length > 1 && activeImgIdx === 0) {
@@ -114,6 +129,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   const handleMouseLeave = () => {
+    if (!canHover) return;
     setIsHovered(false);
     setActiveImgIdx(0);
     setTransformStyle({
@@ -156,28 +172,30 @@ export default function ProductCard({ product }: ProductCardProps) {
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="relative flex flex-col h-full [perspective:1000px] select-none"
+      className={`relative flex flex-col h-full ${canHover ? "[perspective:1000px]" : ""} select-none`}
     >
       <div
-        className="group relative flex flex-col h-full rounded-2xl overflow-hidden bg-white dark:bg-[#121824] border border-gray-200/90 dark:border-gray-800 transition-all duration-300 ease-out will-change-transform"
+        className="group relative flex flex-col h-full rounded-2xl overflow-hidden bg-white dark:bg-[#121824] border border-gray-200/90 dark:border-gray-800 transition-all duration-300 ease-out"
         style={{
-          transform: isHovered
+          transform: canHover && isHovered
             ? `rotateX(${transformStyle.rotateX}deg) rotateY(${transformStyle.rotateY}deg) translateY(-6px) scale(1.015)`
-            : "rotateX(0deg) rotateY(0deg) translateY(0px) scale(1)",
-          transformStyle: "preserve-3d",
+            : "none",
+          transformStyle: canHover ? "preserve-3d" : undefined,
           boxShadow: isHovered
             ? "0 20px 40px -15px rgba(0, 0, 0, 0.2), 0 0 25px 2px rgba(104, 26, 114, 0.12)"
             : "0 2px 8px -2px rgba(0, 0, 0, 0.05)",
         }}
       >
-        {/* Dynamic Specular Reflection Glare */}
-        <div
-          className="pointer-events-none absolute inset-0 z-30 transition-opacity duration-300 rounded-2xl"
-          style={{
-            opacity: transformStyle.glareOpacity,
-            background: `radial-gradient(circle at ${transformStyle.glareX}% ${transformStyle.glareY}%, rgba(255,255,255,0.4) 0%, transparent 60%)`,
-          }}
-        />
+        {/* Dynamic Specular Reflection Glare (Desktop only) */}
+        {canHover && (
+          <div
+            className="pointer-events-none absolute inset-0 z-30 transition-opacity duration-300 rounded-2xl"
+            style={{
+              opacity: transformStyle.glareOpacity,
+              background: `radial-gradient(circle at ${transformStyle.glareX}% ${transformStyle.glareY}%, rgba(255,255,255,0.4) 0%, transparent 60%)`,
+            }}
+          />
+        )}
 
         <Link href={`/product/${product.slug}`} className="flex flex-col flex-1">
           {/* Product Multi-Image Box */}

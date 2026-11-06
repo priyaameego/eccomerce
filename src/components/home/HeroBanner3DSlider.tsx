@@ -121,7 +121,7 @@ export default function HeroBanner3DSlider() {
   const current = CLEAN_SLIDES[currentIndex];
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 pt-3 sm:pt-4">
+    <div className="w-full">
       <div
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
