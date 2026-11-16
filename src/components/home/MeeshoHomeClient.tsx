@@ -26,6 +26,8 @@ import { PRODUCTS, CATEGORIES, Product } from "@/data/products";
 import ProductCard from "@/components/ui/ProductCard";
 import HeroBanner3DSlider from "./HeroBanner3DSlider";
 import MaisonVellHero from "./MaisonVellHero";
+import VeloraGoldBanner from "./VeloraGoldBanner";
+import OriginalBrandsSection from "./OriginalBrandsSection";
 
 export default function MeeshoHomeClient() {
   // Hero Experience Switcher: Maison Vell Runway 3D vs Wholesale Deals
@@ -346,6 +348,12 @@ export default function MeeshoHomeClient() {
           })}
         </div>
       </section>
+
+      {/* 2.5. VELORA GOLD SHOWCASE (Luxury Arched Cards & Celebration Couture) */}
+      <VeloraGoldBanner />
+
+      {/* 2.6. ORIGINAL BRANDS SHOWCASE (100% Genuine Certified Brands Carousel) */}
+      <OriginalBrandsSection />
 
       {/* 3. VALUE STORE CHIPS / BUDGET DEALS (Luxury Boutique Bar) */}
       <section className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-5">
