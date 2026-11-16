@@ -124,7 +124,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
   ).slice(0, 4);
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] dark:bg-[#0f172a] pt-3 sm:pt-4 pb-28 sm:pb-16">
+    <div className="min-h-screen bg-transparent pt-3 sm:pt-4 pb-28 sm:pb-16">
       <div className="max-w-7xl mx-auto px-3 sm:px-6">
         {/* Breadcrumbs */}
         <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-3 sm:mb-4 overflow-x-auto whitespace-nowrap scrollbar-none">

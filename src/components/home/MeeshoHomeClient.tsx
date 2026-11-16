@@ -173,7 +173,7 @@ export default function MeeshoHomeClient() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] dark:bg-[#0b0f19] text-gray-900 dark:text-gray-100 transition-colors">
+    <div className="min-h-screen bg-transparent text-gray-900 dark:text-gray-100 transition-colors">
       {/* 1. ULTRA-PREMIUM 3D FASHION HERO EXPERIENCE (Maison Vell Runway Lookbook + Wholesale Deals) */}
       <section className="w-full max-w-7xl mx-auto px-3 sm:px-6 pt-3 sm:pt-4">
         {/* Luxury Hero Switcher Tabs */}
@@ -224,10 +224,10 @@ export default function MeeshoHomeClient() {
         )}
       </section>
 
-      {/* 1. LUXURY WHOLESALE TRUST & ASSURANCE BAR */}
-      <section className="max-w-7xl mx-auto px-3 sm:px-6 pt-5 pb-2">
+      {/* 1. LUXURY WHOLESALE TRUST & ASSURANCE BAR (Spacious Luxury Layout) */}
+      <section className="max-w-7xl mx-auto px-3 sm:px-6 my-6 sm:my-8 relative z-20">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-          <div className="flex items-center gap-3 p-3.5 sm:p-4 rounded-2xl bg-white/90 dark:bg-[#151c2c]/90 backdrop-blur-md border border-purple-100/70 dark:border-purple-900/40 shadow-xs hover:shadow-md hover:border-[#681a72]/40 transition-all duration-300 group">
+          <div className="flex items-center gap-3 p-3.5 sm:p-4 rounded-2xl bg-white/95 dark:bg-[#151c2c]/95 backdrop-blur-xl border border-purple-100/80 dark:border-purple-900/40 shadow-xs hover:shadow-md hover:border-[#681a72]/40 transition-all duration-300 group hover:-translate-y-0.5">
             <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-purple-100 to-fuchsia-50 dark:from-purple-950/60 dark:to-purple-900/40 text-[#681a72] dark:text-[#c084fc] flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition-transform">
               <Truck className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.2]" />
             </div>
@@ -237,7 +237,7 @@ export default function MeeshoHomeClient() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3 p-3.5 sm:p-4 rounded-2xl bg-white/90 dark:bg-[#151c2c]/90 backdrop-blur-md border border-purple-100/70 dark:border-purple-900/40 shadow-xs hover:shadow-md hover:border-emerald-500/40 transition-all duration-300 group">
+          <div className="flex items-center gap-3 p-3.5 sm:p-4 rounded-2xl bg-white/95 dark:bg-[#151c2c]/95 backdrop-blur-xl border border-purple-100/80 dark:border-purple-900/40 shadow-xs hover:shadow-md hover:border-emerald-500/40 transition-all duration-300 group hover:-translate-y-0.5">
             <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-emerald-100 to-teal-50 dark:from-emerald-950/60 dark:to-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition-transform">
               <IndianRupee className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.2]" />
             </div>
@@ -247,7 +247,7 @@ export default function MeeshoHomeClient() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3 p-3.5 sm:p-4 rounded-2xl bg-white/90 dark:bg-[#151c2c]/90 backdrop-blur-md border border-purple-100/70 dark:border-purple-900/40 shadow-xs hover:shadow-md hover:border-amber-500/40 transition-all duration-300 group">
+          <div className="flex items-center gap-3 p-3.5 sm:p-4 rounded-2xl bg-white/95 dark:bg-[#151c2c]/95 backdrop-blur-xl border border-purple-100/80 dark:border-purple-900/40 shadow-xs hover:shadow-md hover:border-amber-500/40 transition-all duration-300 group hover:-translate-y-0.5">
             <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-amber-100 to-orange-50 dark:from-amber-950/60 dark:to-amber-900/40 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition-transform">
               <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.2]" />
             </div>
@@ -257,7 +257,7 @@ export default function MeeshoHomeClient() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3 p-3.5 sm:p-4 rounded-2xl bg-white/90 dark:bg-[#151c2c]/90 backdrop-blur-md border border-purple-100/70 dark:border-purple-900/40 shadow-xs hover:shadow-md hover:border-rose-500/40 transition-all duration-300 group">
+          <div className="flex items-center gap-3 p-3.5 sm:p-4 rounded-2xl bg-white/95 dark:bg-[#151c2c]/95 backdrop-blur-xl border border-purple-100/80 dark:border-purple-900/40 shadow-xs hover:shadow-md hover:border-rose-500/40 transition-all duration-300 group hover:-translate-y-0.5">
             <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-rose-100 to-pink-50 dark:from-rose-950/60 dark:to-rose-900/40 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition-transform">
               <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.2]" />
             </div>
@@ -269,9 +269,9 @@ export default function MeeshoHomeClient() {
         </div>
       </section>
 
-      {/* 2. TOP CATEGORIES TO CHOOSE FROM (Luxury Carousel with Vogue-Style Story Rings) */}
-      <section id="home-categories-section" className="max-w-7xl mx-auto px-3 sm:px-6 py-5 sm:py-6">
-        <div className="flex items-center justify-between mb-4">
+      {/* 2. TOP CATEGORIES TO CHOOSE FROM (Dedicated Category Navigation with Vogue-Style Story Rings) */}
+      <section id="home-categories-section" className="max-w-7xl mx-auto px-3 sm:px-6 py-6 sm:py-8">
+        <div className="flex items-center justify-between mb-5 sm:mb-6">
           <div>
             <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-[0.2em] text-[#681a72] dark:text-[#c084fc] flex items-center gap-1.5 mb-0.5">
               <Sparkles className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
@@ -281,18 +281,17 @@ export default function MeeshoHomeClient() {
               Top Categories to Choose From
             </h2>
             <p className="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-              Explore authentic wholesale apparel, ethnic luxury, and accessories
+              Click any category to explore its dedicated collection with certified mill prices
             </p>
           </div>
-          <div className="flex items-center gap-2">
-            {selectedCategory !== "all" && (
-              <button
-                onClick={() => setSelectedCategory("all")}
-                className="text-xs text-[#681a72] dark:text-[#c084fc] font-bold hover:underline cursor-pointer mr-2"
-              >
-                Clear Filter
-              </button>
-            )}
+          <div className="flex items-center gap-3">
+            <Link
+              href="/shop"
+              className="text-xs text-[#681a72] dark:text-[#c084fc] font-bold hover:underline flex items-center gap-1 cursor-pointer mr-1"
+            >
+              <span>View All</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
             {/* Desktop / Tablet Scroll Chevrons */}
             <div className="hidden sm:flex items-center gap-1.5">
               <button
@@ -313,35 +312,20 @@ export default function MeeshoHomeClient() {
           </div>
         </div>
 
-        {/* Categories: Smooth Horizontal Carousel with Generous Sizing */}
+        {/* Categories: Smooth Horizontal Carousel Navigating Directly to Dedicated Category Pages */}
         <div
           ref={categoriesScrollRef}
-          className="flex gap-3 sm:gap-4 overflow-x-auto scrollbar-none pb-3 px-1 -mx-1 snap-x scroll-smooth"
+          className="flex gap-4 sm:gap-5 overflow-x-auto scrollbar-none pb-4 px-1 -mx-1 snap-x scroll-smooth"
         >
           {CATEGORIES.map((cat) => {
-            const isSelected = selectedCategory === cat.name;
             return (
-              <button
+              <Link
                 key={cat.id}
-                onClick={() => {
-                  setSelectedCategory(isSelected ? "all" : cat.name);
-                  const el = document.getElementById("products-section");
-                  if (el) el.scrollIntoView({ behavior: "smooth" });
-                }}
-                className={`group relative flex flex-col items-center justify-between text-center p-3 sm:p-3.5 pb-3.5 sm:pb-4 rounded-2xl shrink-0 transition-all duration-300 snap-start cursor-pointer w-[110px] sm:w-[130px] min-h-[152px] sm:min-h-[172px] ${
-                  isSelected
-                    ? "bg-purple-100/90 dark:bg-purple-950/70 shadow-md ring-2 ring-[#681a72] dark:ring-[#c084fc] -translate-y-1"
-                    : "bg-white/90 dark:bg-[#151c2c]/90 backdrop-blur-xs border border-purple-100/70 dark:border-purple-900/30 hover:bg-white dark:hover:bg-[#151c2c] hover:-translate-y-1.5 hover:shadow-lg hover:border-[#681a72]/30"
-                }`}
+                href={`/shop?category=${encodeURIComponent(cat.name)}`}
+                className="group relative flex flex-col items-center justify-between text-center p-3.5 sm:p-4 pb-4 sm:pb-5 rounded-2xl shrink-0 transition-all duration-300 snap-start cursor-pointer w-[118px] sm:w-[138px] min-h-[162px] sm:min-h-[182px] bg-white/95 dark:bg-[#151c2c]/95 backdrop-blur-md border border-purple-100/70 dark:border-purple-900/30 hover:bg-white dark:hover:bg-[#151c2c] hover:-translate-y-1.5 hover:shadow-xl hover:border-[#681a72]/40"
               >
                 {/* Vogue Story Ring Frame */}
-                <div
-                  className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-full p-0.5 mb-2.5 transition-all duration-300 group-hover:scale-108 group-hover:shadow-[0_8px_20px_rgba(104,26,114,0.22)] ${
-                    isSelected
-                      ? "bg-gradient-to-tr from-[#681a72] via-[#d946ef] to-amber-400 shadow-md"
-                      : "bg-gradient-to-tr from-gray-200 via-gray-100 to-gray-300 dark:from-gray-700 dark:via-purple-900/40 dark:to-gray-800 group-hover:from-[#681a72] group-hover:via-rose-400 group-hover:to-amber-300"
-                  }`}
-                >
+                <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full p-0.5 mb-3 transition-all duration-300 group-hover:scale-108 group-hover:shadow-[0_8px_20px_rgba(104,26,114,0.22)] bg-gradient-to-tr from-gray-200 via-gray-100 to-gray-300 dark:from-gray-700 dark:via-purple-900/40 dark:to-gray-800 group-hover:from-[#681a72] group-hover:via-rose-400 group-hover:to-amber-300">
                   <div className="relative w-full h-full rounded-full overflow-hidden bg-white dark:bg-gray-900">
                     <Image
                       src={cat.image}
@@ -353,24 +337,18 @@ export default function MeeshoHomeClient() {
                   </div>
                 </div>
                 <div className="w-full flex items-center justify-center min-h-[2.5rem] mt-auto">
-                  <span
-                    className={`text-[11px] sm:text-xs font-bold leading-tight line-clamp-2 text-center break-words px-1 transition-colors ${
-                      isSelected
-                        ? "text-[#681a72] dark:text-[#c084fc]"
-                        : "text-gray-800 dark:text-gray-100 group-hover:text-[#681a72] dark:group-hover:text-[#c084fc]"
-                    }`}
-                  >
+                  <span className="text-[11px] sm:text-xs font-bold leading-tight line-clamp-2 text-center break-words px-1 text-gray-800 dark:text-gray-100 group-hover:text-[#681a72] dark:group-hover:text-[#c084fc] transition-colors">
                     {cat.name}
                   </span>
                 </div>
-              </button>
+              </Link>
             );
           })}
         </div>
       </section>
 
       {/* 3. VALUE STORE CHIPS / BUDGET DEALS (Luxury Boutique Bar) */}
-      <section className="max-w-7xl mx-auto px-3 sm:px-6 py-2 sm:py-3">
+      <section className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-5">
         <div className="bg-white/90 dark:bg-[#151c2c]/90 backdrop-blur-md p-3.5 sm:p-4 rounded-2xl border border-purple-100/80 dark:border-purple-900/40 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-1.5 shrink-0">
             <span className="text-[11px] sm:text-xs font-black uppercase tracking-wider bg-gradient-to-r from-[#681a72] to-rose-600 bg-clip-text text-transparent flex items-center gap-1.5">

@@ -39,7 +39,7 @@ export default function SellerPartnerPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] dark:bg-[#0b0f19] text-gray-900 dark:text-gray-100 py-10 px-4 sm:px-6">
+    <div className="min-h-screen bg-transparent text-gray-900 dark:text-gray-100 py-10 px-4 sm:px-6">
       <div className="max-w-5xl mx-auto space-y-10">
         {/* Hero Section */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">

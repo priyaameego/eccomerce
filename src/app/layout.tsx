@@ -55,7 +55,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen bg-[#f8f9fa] text-[#1e293b] flex flex-col font-sans selection:bg-[#681a72] selection:text-white pb-14 sm:pb-0">
+      <body className="min-h-screen text-[#1e293b] dark:text-[#f1f5f9] flex flex-col font-sans selection:bg-[#681a72] selection:text-white pb-14 sm:pb-0">
         <ThemeProvider>
           {/* Velora Global Header */}
           <Navbar />

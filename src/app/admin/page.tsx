@@ -219,7 +219,7 @@ export default function SupplierAdminPage() {
 
   if (!user || (user.role !== "admin" && user.role !== "supplier")) {
     return (
-      <div className="min-h-[80vh] flex items-center justify-center px-4 py-12 bg-[#f8f9fa] dark:bg-[#0b0f19]">
+      <div className="min-h-[80vh] flex items-center justify-center px-4 py-12 bg-transparent">
         <div className="w-full max-w-md bg-white dark:bg-[#131926] rounded-3xl border border-gray-200 dark:border-gray-800 shadow-2xl p-6 sm:p-8 text-center space-y-6">
           <div className="w-16 h-16 rounded-2xl bg-purple-50 dark:bg-purple-950/40 text-[#681a72] dark:text-[#c084fc] flex items-center justify-center mx-auto shadow-sm">
             <Lock className="w-8 h-8" />
@@ -319,7 +319,7 @@ export default function SupplierAdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] dark:bg-[#0b0f19] pt-6 pb-20 px-4 sm:px-6 transition-colors">
+    <div className="min-h-screen bg-transparent pt-6 pb-20 px-4 sm:px-6 transition-colors">
       <div className="max-w-6xl mx-auto space-y-6">
         {/* Top Notification Banner if product was just published */}
         {successMsg && (

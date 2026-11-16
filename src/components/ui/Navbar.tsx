@@ -295,7 +295,7 @@ export default function Navbar() {
       </div>
 
       {/* Secondary Categories Mega Bar */}
-      <nav className="border-t border-gray-100 dark:border-gray-800 hidden lg:block bg-white dark:bg-[#0b0f19] transition-colors">
+      <nav className="border-t border-gray-100/80 dark:border-gray-800 hidden lg:block bg-white/80 dark:bg-[#0b0f19]/80 backdrop-blur-md transition-colors">
         <div className="max-w-7xl mx-auto px-6 relative">
           <ul className="flex items-center justify-between text-xs py-1">
             {CATEGORIES.map((cat) => (

@@ -38,7 +38,7 @@ export default function CartPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] dark:bg-[#0f172a] pt-4 sm:pt-6 pb-24 sm:pb-20 px-3 sm:px-6">
+    <div className="min-h-screen bg-transparent pt-4 sm:pt-6 pb-24 sm:pb-20 px-3 sm:px-6">
       <div className="max-w-6xl mx-auto">
         {/* Header Breadcrumbs */}
         <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-gray-200 dark:border-gray-800 mb-4 sm:mb-6">
